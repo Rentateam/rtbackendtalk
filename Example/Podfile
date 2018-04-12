@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'RTBackendTalk_Example' do
+  pod 'RTBackendTalk', :path => '../'
+
+  target 'RTBackendTalk_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
