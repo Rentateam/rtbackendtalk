@@ -1,21 +1,56 @@
-//
-//  AppDelegate.swift
-//  RTBackendTalk
-//
-//  Created by a-25 on 04/12/2018.
-//  Copyright (c) 2018 a-25. All rights reserved.
-//
-
 import UIKit
+import RTBackendTalk
+import Alamofire
+import AlamofireActivityLogger
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    fileprivate struct BackgroundPrinter: Printer {
+        public init() {}
+        
+        public func print(_ string: String, phase: Phase) {
+            DispatchQueue.global(qos: .utility).async {
+                Swift.print(string)
+            }
+        }
+    }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 300
+        let requestService = RequestService(queue: DispatchQueue.global(qos: .utility),
+                                            baseUrl: "https://httpbin.org",
+                                            headersDelegate: self,
+                                            authHandler: self,
+                                            configuration: configuration) { request in
+                                                request.log(level: .info,
+                                                            options: [.onlyDebug, .jsonPrettyPrint, .includeSeparator],
+                                                            printer: BackgroundPrinter())
+        }
+        requestService.makeJsonRequest(request: TestRequest(),
+                                       onComplete: { response, errorCode in
+                                        print("TestRequest completed")
+        },
+                                       onError: { error, errorCode, json in
+                                        print("TestRequest error")
+        },
+                                       queue: DispatchQueue.main)
+        
+        
+        requestService.makeDataRequest(request: TestDataRequest(),
+                                       onComplete: { data, errorCode in
+                                        print("TestDataRequest completed")
+        },
+                                       onError: { error, errorCode, data in
+                                        print("TestDataRequest error")
+        },
+                                       queue: DispatchQueue.main)
         return true
     }
 
@@ -40,7 +75,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 
+extension AppDelegate: RequestHeadersDelegateProtocol {
+    func getHeaders() -> HTTPHeaders? {
+        var headers = HTTPHeaders()
+        headers["SomeOwnHeader"] = "Value"
+        return headers
+    }
+}
+
+extension AppDelegate: AuthHandlerProtocol {
+    func isAuthorizationExpired(response: HTTPURLResponse?) -> Bool {
+        return response?.statusCode == 401
+    }
+    
+    func authorizationExpired() {
+        print("Authorization expired :( ")
+    }
+    
+    
+}

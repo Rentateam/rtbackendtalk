@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'RTBackendTalk'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of RTBackendTalk.'
+  s.summary          = 'A library to add support for network requests over Alamofire'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,25 +18,22 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+This library offers engine for creating network requests and processing them.
                        DESC
 
-  s.homepage         = 'https://github.com/a-25/RTBackendTalk'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.homepage         = 'https://bitbucket.org/rentateam/rtbackendtalk'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'a-25' => 'anuryadov@gmail.com' }
-  s.source           = { :git => 'https://github.com/a-25/RTBackendTalk.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.author           = { 'RentaTeam' => 'info@rentateam.ru' }
+  s.source           = { :git => 'https://bitbucket.org/rentateam/rtbackendtalk.git', :tag => s.version.to_s }
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '10.3'
 
   s.source_files = 'RTBackendTalk/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'RTBackendTalk' => ['RTBackendTalk/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'Alamofire', '~> 4.7.1'
+  s.dependency 'AlamofireActivityLogger', '~> 2.4.0'
+  s.dependency 'PromiseKit', '~> 6.2.4'
+  s.dependency 'PromiseKit/Alamofire', '~> 6.0'
+  s.dependency 'SwiftyJSON', '~> 4.0.0'
 end
