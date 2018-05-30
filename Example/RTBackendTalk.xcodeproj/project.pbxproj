@@ -16,6 +16,7 @@
 		B735B9D6A282A058101E7D15 /* Pods_RTBackendTalk_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A71716164D2C7AA0C3E8A75 /* Pods_RTBackendTalk_Example.framework */; };
 		EBEC2424207F7CDA00EFFEB6 /* TestRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEC2423207F7CDA00EFFEB6 /* TestRequest.swift */; };
 		EBEC2426207F7D9A00EFFEB6 /* TestDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEC2425207F7D9A00EFFEB6 /* TestDataRequest.swift */; };
+		EBF2471E20BECA2000B7AC3B /* TestMultipartRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF2471D20BECA2000B7AC3B /* TestMultipartRequest.swift */; };
 		EE6A44CAEF3267D8A99D62D0 /* Pods_RTBackendTalk_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD15F390C6235037E4131D42 /* Pods_RTBackendTalk_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		E88C42DC08BAC8732B7FDB50 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		EBEC2423207F7CDA00EFFEB6 /* TestRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRequest.swift; sourceTree = "<group>"; };
 		EBEC2425207F7D9A00EFFEB6 /* TestDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataRequest.swift; sourceTree = "<group>"; };
+		EBF2471D20BECA2000B7AC3B /* TestMultipartRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMultipartRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				EBEC2423207F7CDA00EFFEB6 /* TestRequest.swift */,
 				EBEC2425207F7D9A00EFFEB6 /* TestDataRequest.swift */,
+				EBF2471D20BECA2000B7AC3B /* TestMultipartRequest.swift */,
 			);
 			name = "Example for RTBackendTalk";
 			path = RTBackendTalk;
@@ -337,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBEC2424207F7CDA00EFFEB6 /* TestRequest.swift in Sources */,
+				EBF2471E20BECA2000B7AC3B /* TestMultipartRequest.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				EBEC2426207F7D9A00EFFEB6 /* TestDataRequest.swift in Sources */,
