@@ -51,6 +51,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                         print("TestDataRequest error")
         },
                                        queue: DispatchQueue.main)
+        
+        let photoList: [UIImage] = [UIImage()]
+        requestService.makeMultipartDataRequest(request: TestMultipartRequest(photoList: photoList),
+                                                     onComplete: { (json, _) in
+                            print("TestMultipartRequest completed")
+                        },
+                                                     onError: { (error, int, _) in
+                            print("TestMultipartRequest error")
+                        },
+                                                     onEncodingError: { (error) in
+                            print("TestMultipartRequest encoding error")
+                        },
+                                                     queue: DispatchQueue.main)
         return true
     }
 

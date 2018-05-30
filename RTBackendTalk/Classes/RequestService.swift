@@ -126,6 +126,66 @@ public class RequestService: RequestServiceProtocol {
         }
     }
     
+    public func makeMultipartDataRequest(request: RequestProtocol,
+                                         onComplete: @escaping (_ response: JSON, _ statusCode: Int?) -> Void,
+                                         onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: JSON?) -> Void,
+                                         onEncodingError: @escaping (_ error: Error?) -> Void,
+                                         queue: DispatchQueue = DispatchQueue.main) {
+        self.sessionManager.upload(multipartFormData: { (multipartFormData) in
+            let parameters = request.getParams()
+            parameters?.forEach({ (key, value) in
+                if let images = value as? [UIImage] {
+                    images.forEach({ (image) in
+                        if let imageData = UIImagePNGRepresentation(image) {
+                            multipartFormData.append(imageData, withName: "\(key) []", mimeType: "image/png")
+                        }
+                    })
+                }
+                if let string = value as? String {
+                    multipartFormData.append((string.data(using: .utf8)) ?? Data(), withName: key, mimeType: "text/plain")
+                }
+                //We can add any type of data here
+            })
+        },
+                                   usingThreshold: UInt64.init(),
+                                   to: self.getRequestUrl(request),
+                                   method: request.getMethod(),
+                                   headers: self.headersDelegate?.getHeaders()) { (encodingResult) in
+                                    switch encodingResult {
+                                    case .success(let upload, _,_ ):
+                                        upload.responseJSON(queue: self.queue,
+                                                            completionHandler: { (response) in
+                                                                switch response.result {
+                                                                case .success:
+                                                                    if let jsonString = response.result.value {
+                                                                        let json = JSON(jsonString)
+                                                                        queue.async {
+                                                                            onComplete(json, response.response?.statusCode)
+                                                                        }
+                                                                    } else {
+                                                                        queue.async {
+                                                                            onError(response.error, response.response?.statusCode, nil)
+                                                                        }
+                                                                    }
+                                                                case .failure(let error):
+                                                                    if self.authHandler?.isAuthorizationExpired(response: response.response) ?? false {
+                                                                        self.authHandler?.authorizationExpired()
+                                                                    } else {
+                                                                        queue.async {
+                                                                            onError(error, response.response?.statusCode, nil)
+                                                                        }
+                                                                    }
+                                                                }
+                                        })
+                                        
+                                    case .failure(let encodingError):
+                                        queue.async {
+                                            onEncodingError(encodingError)
+                                        }
+                                    }
+        }
+    }
+    
     private func getRequestUrl(_ request: RequestProtocol) -> String {
         if request.isAbsoluteUrl() {
             return request.getUrl()
