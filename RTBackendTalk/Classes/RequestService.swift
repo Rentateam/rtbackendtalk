@@ -1,5 +1,4 @@
 import Foundation
-import SwiftyJSON
 import Alamofire
 
 public typealias RequestServiceLogRequest = (_ request: DataRequest) -> DataRequest
@@ -26,10 +25,12 @@ public class RequestService: RequestServiceProtocol {
         self.logRequest = logRequest
     }
     
-    public func makeJsonRequest(request: RequestProtocol,
-                                onComplete: @escaping (_ response: JSON, _ statusCode: Int?) -> Void,
-                                onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: JSON?) -> Void,
-                                queue: DispatchQueue = DispatchQueue.main) {
+    public func makeJsonRequest<Foo>(request: RequestProtocol,
+                                responseType: Foo.Type,
+                                onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
+                                onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
+                                queue: DispatchQueue = DispatchQueue.main,
+                                codingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) where Foo: Decodable {
         self.logRequest(self.sessionManager.request(
             self.getRequestUrl(request),
             method: request.getMethod(),
@@ -39,12 +40,19 @@ public class RequestService: RequestServiceProtocol {
             .validate()
             .validate(contentType: ["application/json"]))
             .responseJSON(queue: self.queue) { response in
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = codingStrategy
                 switch response.result {
                 case .success:
-                    if let jsonString = response.result.value {
-                        let json = JSON(jsonString)
-                        queue.async {
-                            onComplete(json, response.response?.statusCode)
+                    if let jsonData = response.data {
+                        if let json = try? jsonDecoder.decode(responseType, from: jsonData) {
+                            queue.async {
+                                onComplete(json, response.response?.statusCode)
+                            }
+                        } else {
+                            queue.async {
+                                onError(response.error, response.response?.statusCode, nil)
+                            }
                         }
                     } else {
                         queue.async {
@@ -55,9 +63,9 @@ public class RequestService: RequestServiceProtocol {
                     if self.authHandler?.isAuthorizationExpired(response: response.response) ?? false {
                         self.authHandler?.authorizationExpired()
                     } else {
-                        var json: JSON?
+                        var json: Foo?
                         if let jsonData = response.data {
-                            json = try? JSON(data: jsonData)
+                            json = try? jsonDecoder.decode(responseType, from: jsonData)
                         }
                         
                         queue.async {
@@ -126,11 +134,13 @@ public class RequestService: RequestServiceProtocol {
         }
     }
     
-    public func makeMultipartDataRequest(request: RequestProtocol,
-                                         onComplete: @escaping (_ response: JSON, _ statusCode: Int?) -> Void,
-                                         onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: JSON?) -> Void,
-                                         onEncodingError: @escaping (_ error: Error?) -> Void,
-                                         queue: DispatchQueue = DispatchQueue.main) {
+    public func makeMultipartDataRequest<Foo>(request: RequestProtocol,
+                                              responseType: Foo.Type,
+                                              onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
+                                              onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
+                                              onEncodingError: @escaping (_ error: Error?) -> Void,
+                                              queue: DispatchQueue = DispatchQueue.main,
+                                              codingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) where Foo: Decodable {
         self.sessionManager.upload(multipartFormData: { (multipartFormData) in
             let parameters = request.getParams()
             parameters?.forEach({ (key, value) in
@@ -155,12 +165,19 @@ public class RequestService: RequestServiceProtocol {
                                     case .success(let upload, _,_ ):
                                         upload.responseJSON(queue: self.queue,
                                                             completionHandler: { (response) in
+                                                                let jsonDecoder = JSONDecoder()
+                                                                jsonDecoder.keyDecodingStrategy = codingStrategy
                                                                 switch response.result {
                                                                 case .success:
-                                                                    if let jsonString = response.result.value {
-                                                                        let json = JSON(jsonString)
-                                                                        queue.async {
-                                                                            onComplete(json, response.response?.statusCode)
+                                                                    if let jsonData = response.data {
+                                                                        if let json = try? jsonDecoder.decode(responseType, from: jsonData) {
+                                                                            queue.async {
+                                                                                onComplete(json, response.response?.statusCode)
+                                                                            }
+                                                                        } else {
+                                                                            queue.async {
+                                                                                onError(response.error, response.response?.statusCode, nil)
+                                                                            }
                                                                         }
                                                                     } else {
                                                                         queue.async {

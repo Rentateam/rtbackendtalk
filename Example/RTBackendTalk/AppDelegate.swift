@@ -18,6 +18,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    struct Post: Codable {
+        let userId: Int
+        let id: Int
+        let title: String
+        let body: String
+        let someUnusedField: String?
+    }
+    
+    struct EmptyResponse: Codable {
+
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -25,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 300
         let requestService = RequestService(queue: DispatchQueue.global(qos: .utility),
-                                            baseUrl: "https://httpbin.org",
+                                            baseUrl: "https://jsonplaceholder.typicode.com",
                                             headersDelegate: self,
                                             authHandler: self,
                                             configuration: configuration) { request in
@@ -34,8 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                             printer: BackgroundPrinter())
         }
         requestService.makeJsonRequest(request: TestRequest(),
+                                       responseType: [Post].self,
                                        onComplete: { response, errorCode in
-                                        print("TestRequest completed")
+                                        print("TestRequest completed, \(response)")
         },
                                        onError: { error, errorCode, json in
                                         print("TestRequest error")
@@ -54,7 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let photoList: [UIImage] = [UIImage()]
         requestService.makeMultipartDataRequest(request: TestMultipartRequest(photoList: photoList),
-                                                     onComplete: { (json, _) in
+                                                responseType: EmptyResponse.self,
+                                                     onComplete: { (json, test) in
                             print("TestMultipartRequest completed")
                         },
                                                      onError: { (error, int, _) in
