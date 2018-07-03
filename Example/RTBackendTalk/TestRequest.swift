@@ -4,7 +4,7 @@ import Alamofire
 
 class TestRequest: RequestProtocol {
     func getUrl() -> String {
-        return "/get"
+        return "/posts"
     }
     
     func isAbsoluteUrl() -> Bool {
