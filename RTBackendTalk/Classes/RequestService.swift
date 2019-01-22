@@ -146,7 +146,7 @@ public class RequestService: RequestServiceProtocol {
             parameters?.forEach({ (key, value) in
                 if let images = value as? [UIImage] {
                     images.forEach({ (image) in
-                        if let imageData = UIImagePNGRepresentation(image) {
+                        if let imageData = image.pngData() {
                             multipartFormData.append(imageData, withName: "\(key) []", mimeType: "image/png")
                         }
                     })
