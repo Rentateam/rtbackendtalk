@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RTBackendTalk'
-  s.version          = '0.1.5'
+  s.version          = '0.1.6'
   s.summary          = 'A library to add support for network requests over Alamofire'
 
 # This description is used to generate tags and improve search results.
@@ -21,10 +21,10 @@ Pod::Spec.new do |s|
 This library offers engine for creating network requests and processing them.
                        DESC
 
-  s.homepage         = 'https://bitbucket.org/rentateam/rtbackendtalk'
+  s.homepage         = 'https://github.com/Rentateam/rtbackendtalk'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'RentaTeam' => 'info@rentateam.ru' }
-  s.source           = { :git => 'https://bitbucket.org/rentateam/rtbackendtalk.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/Rentateam/rtbackendtalk.git', :tag => s.version.to_s }
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
 
   s.ios.deployment_target = '10.3'
