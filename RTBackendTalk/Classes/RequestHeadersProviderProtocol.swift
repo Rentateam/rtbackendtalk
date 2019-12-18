@@ -1,6 +1,6 @@
 import Foundation
 import Alamofire
 
-public protocol RequestHeadersDelegateProtocol {
+public protocol RequestHeadersProviderProtocol {
     func getHeaders() -> HTTPHeaders?
 }
