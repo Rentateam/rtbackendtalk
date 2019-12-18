@@ -27,8 +27,8 @@ This library offers engine for creating network requests and processing them.
   s.source           = { :git => 'https://github.com/Rentateam/rtbackendtalk.git', :tag => s.version.to_s }
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
 
-  s.ios.deployment_target = '10.3'
-  s.swift_version = '4.2'
+  s.swift_version = '5.0'
+  s.ios.deployment_target = '10.0'
 
   s.source_files = 'RTBackendTalk/Classes/**/*'
   
