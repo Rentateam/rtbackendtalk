@@ -25,7 +25,7 @@ public protocol RequestServiceProtocol: class {
                                        codingStrategy: JSONDecoder.KeyDecodingStrategy) where Foo: Decodable
 }
 
-extension RequestServiceProtocol {
+public extension RequestServiceProtocol {
     func makeJsonRequest<Foo>(request: RequestProtocol,
                               responseType: Foo.Type,
                               onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
