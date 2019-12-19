@@ -7,10 +7,10 @@ import AlamofireActivityLogger
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
+
     fileprivate struct BackgroundPrinter: Printer {
         public init() {}
-        
+
         public func print(_ string: String, phase: Phase) {
             DispatchQueue.global(qos: .utility).async {
                 Swift.print(string)
@@ -25,19 +25,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let body: String
         let someUnusedField: String?
     }
-    
+
     struct EmptyResponse: Codable {
 
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        
+
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 300
         let requestService = RequestService(queue: DispatchQueue.global(qos: .utility),
                                             baseUrl: "https://jsonplaceholder.typicode.com",
-                                            headersDelegate: self,
+                                            headersProvider: self,
                                             authHandler: self,
                                             configuration: configuration) { request in
                                                 request.log(level: .info,
@@ -46,34 +45,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         requestService.makeJsonRequest(request: TestRequest(),
                                        responseType: [Post].self,
-                                       onComplete: { response, errorCode in
+                                       onComplete: { response, _ in
                                         print("TestRequest completed, \(response)")
         },
-                                       onError: { error, errorCode, json in
+                                       onError: { _, _, _ in
                                         print("TestRequest error")
         },
                                        queue: DispatchQueue.main)
-        
-        
+
         requestService.makeDataRequest(request: TestDataRequest(),
-                                       onComplete: { data, errorCode in
+                                       onComplete: { _, _ in
                                         print("TestDataRequest completed")
         },
-                                       onError: { error, errorCode, data in
+                                       onError: { _, _, _ in
                                         print("TestDataRequest error")
         },
                                        queue: DispatchQueue.main)
-        
+
         let photoList: [UIImage] = [UIImage()]
         requestService.makeMultipartDataRequest(request: TestMultipartRequest(photoList: photoList),
                                                 responseType: EmptyResponse.self,
-                                                     onComplete: { (json, test) in
+                                                     onComplete: { (_, _) in
                             print("TestMultipartRequest completed")
                         },
-                                                     onError: { (error, int, _) in
+                                                     onError: { (_, _, _) in
                             print("TestMultipartRequest error")
                         },
-                                                     onEncodingError: { (error) in
+                                                     onEncodingError: { (_) in
                             print("TestMultipartRequest encoding error")
                         },
                                                      queue: DispatchQueue.main)
@@ -103,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension AppDelegate: RequestHeadersDelegateProtocol {
+extension AppDelegate: RequestHeadersProviderProtocol {
     func getHeaders() -> HTTPHeaders? {
         var headers = HTTPHeaders()
         headers["SomeOwnHeader"] = "Value"
@@ -115,10 +113,9 @@ extension AppDelegate: AuthHandlerProtocol {
     func isAuthorizationExpired(response: HTTPURLResponse?) -> Bool {
         return response?.statusCode == 401
     }
-    
+
     func authorizationExpired() {
         print("Authorization expired :( ")
     }
-    
-    
+
 }

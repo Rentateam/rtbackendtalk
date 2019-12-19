@@ -1,0 +1,8 @@
+excluded:
+  - Pods
+
+included:
+  - ../RTBackendTalk/Classes
+
+function_parameter_count: 7
+line_length: 240

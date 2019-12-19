@@ -1,7 +1,9 @@
 use_frameworks!
+platform :ios, '10.0'
 
 target 'RTBackendTalk_Example' do
   pod 'RTBackendTalk', :path => '../'
+  pod 'SwiftLint'
 
   target 'RTBackendTalk_Tests' do
     inherit! :search_paths
