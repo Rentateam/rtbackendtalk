@@ -8,6 +8,10 @@ public protocol RequestServiceProtocol: class {
                               onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
                               queue: DispatchQueue,
                               codingStrategy: JSONDecoder.KeyDecodingStrategy) where Foo: Decodable
+    func makeJsonRequests<RequestId, ResponseType: Decodable>(
+        requestInfo: [RequestId: MultipleRequestInfo<ResponseType>],
+        onComplete: @escaping (_ successResults: [RequestId: MultipleResponseInfo<ResponseType>], _ errorResults: [RequestId: MultipleResponseErrorInfo<ResponseType>]) -> Void,
+        queue: DispatchQueue) where RequestId: Hashable, ResponseType: Decodable
     func makeDataRequest(request: RequestProtocol,
                          onComplete: @escaping (_ data: Data?, _ statusCode: Int?) -> Void,
                          onError: @escaping (_ error: Error?, _ statusCode: Int?, _ data: Data?) -> Void,
@@ -36,5 +40,14 @@ public extension RequestServiceProtocol {
                         onError: onError,
                         queue: DispatchQueue.main,
                         codingStrategy: .useDefaultKeys)
+    }
+
+    func makeJsonRequests<RequestId, ResponseType: Decodable>(
+        requestInfo: [RequestId: MultipleRequestInfo<ResponseType>],
+        onComplete: @escaping (_ successResults: [RequestId: MultipleResponseInfo<ResponseType>], _ errorResults: [RequestId: MultipleResponseErrorInfo<ResponseType>]) -> Void,
+        queue: DispatchQueue) where RequestId: Hashable, ResponseType: Decodable {
+        makeJsonRequests(requestInfo: requestInfo,
+                         onComplete: onComplete,
+                         queue: DispatchQueue.main)
     }
 }
