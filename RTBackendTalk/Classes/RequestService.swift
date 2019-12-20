@@ -63,7 +63,6 @@ public class RequestService: RequestServiceProtocol {
                         }
                     }
                 case .failure(let error):
-                    print(String(data: response.data ?? Data(), encoding: .utf8) ?? "")
                     if self.authHandler?.isAuthorizationExpired(response: response.response) ?? false {
                         self.authHandler?.authorizationExpired()
                     } else {
@@ -78,7 +77,34 @@ public class RequestService: RequestServiceProtocol {
                     }
                 }
         }
+    }
 
+    public func makeJsonRequests<RequestId, ResponseType: Decodable>(
+        requestInfo: [RequestId: MultipleRequestInfo<ResponseType>],
+        onComplete: @escaping (_ successResults: [RequestId: MultipleResponseInfo<ResponseType>], _ errorResults: [RequestId: MultipleResponseErrorInfo<ResponseType>]) -> Void,
+        queue: DispatchQueue = DispatchQueue.main) where RequestId: Hashable, ResponseType: Decodable {
+
+        var successResults = [RequestId: MultipleResponseInfo<ResponseType>]()
+        var errorResults = [RequestId: MultipleResponseErrorInfo<ResponseType>]()
+        let dataGroup = DispatchGroup()
+        for (requestId, info) in requestInfo {
+            dataGroup.enter()
+            self.makeJsonRequest(request: info.request,
+                                 responseType: ResponseType.self,
+                                 onComplete: { (response, errorCode) in
+                                    successResults[requestId] = MultipleResponseInfo(statusCode: errorCode, response: response)
+                                    dataGroup.leave()
+            },
+                                 onError: { (error, errorCode, response) in
+                                    errorResults[requestId] = MultipleResponseErrorInfo(error: error, statusCode: errorCode, response: response)
+                                    dataGroup.leave()
+            },
+                                 queue: queue,
+                                 codingStrategy: info.codingStrategy)
+        }
+        dataGroup.notify(queue: DispatchQueue.main) {
+            onComplete(successResults, errorResults)
+        }
     }
 
     public func makeDataRequest<Foo>(request: RequestProtocol,

@@ -75,6 +75,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             print("TestMultipartRequest encoding error")
                         },
                                                      queue: DispatchQueue.main)
+        
+        let requestInfo = [
+            1: MultipleRequestInfo<[Post]>(request: TestRequest()),
+            2: MultipleRequestInfo<[Post]>(request: Test2Request())
+        ]
+        requestService.makeJsonRequests(requestInfo: requestInfo,
+                                        onComplete: { responses, errors in
+                                            // swiftlint:disable
+                                            // Keys to responses and errors correspond initial keys
+                                            // let response1 = responses[1]
+                                            // let response2 = responses[2]
+                                            // let error1 = errors[1]
+                                            // let error2 = errors[2]
+                                            //Decide what to do according to error politics:
+                                            var isCorrectResponse: Bool
+                                            let shouldLoadAnyResult = true
+                                            if shouldLoadAnyResult {
+                                                // Any of results is OK
+                                                isCorrectResponse = !responses.isEmpty
+                                            } else {
+                                                // Only all results are OK
+                                                isCorrectResponse = errors.isEmpty
+                                            }
+                                            // Or, maybe, some custom politics
+                                            // swiftlint:enable
+        },
+                                        queue: DispatchQueue.main)
+        
         return true
     }
 

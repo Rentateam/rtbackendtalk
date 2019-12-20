@@ -6,3 +6,4 @@ included:
 
 function_parameter_count: 7
 line_length: 240
+type_body_length: 500
