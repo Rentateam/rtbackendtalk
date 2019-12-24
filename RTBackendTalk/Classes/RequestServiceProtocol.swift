@@ -27,6 +27,13 @@ public protocol RequestServiceProtocol: class {
                                        onEncodingError: @escaping (_ error: Error?) -> Void,
                                        queue: DispatchQueue,
                                        codingStrategy: JSONDecoder.KeyDecodingStrategy) where Foo: Decodable
+    func makeFileDataRequest<Foo: Decodable>(request: RequestProtocol & BucketProtocol,
+                                             responseType: Foo.Type,
+                                             onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
+                                             onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
+                                             onEncodingError: @escaping (_ error: Error?) -> Void,
+                                             queue: DispatchQueue,
+                                             codingStrategy: JSONDecoder.KeyDecodingStrategy)
 }
 
 public extension RequestServiceProtocol {
@@ -49,5 +56,21 @@ public extension RequestServiceProtocol {
         makeJsonRequests(requestInfo: requestInfo,
                          onComplete: onComplete,
                          queue: DispatchQueue.main)
+    }
+
+    func makeFileDataRequest<Foo: Decodable>(request: RequestProtocol & BucketProtocol,
+                                             responseType: Foo.Type,
+                                             onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
+                                             onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
+                                             onEncodingError: @escaping (_ error: Error?) -> Void,
+                                             queue: DispatchQueue = DispatchQueue.main,
+                                             codingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) {
+        makeFileDataRequest(request: request,
+                            responseType: responseType,
+                            onComplete: onComplete,
+                            onError: onError,
+                            onEncodingError: onEncodingError,
+                            queue: queue,
+                            codingStrategy: codingStrategy)
     }
 }

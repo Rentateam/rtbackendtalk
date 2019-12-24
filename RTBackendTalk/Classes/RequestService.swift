@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import Alamofire
 
 public typealias RequestServiceLogRequest = (_ request: DataRequest) -> DataRequest
@@ -281,6 +282,69 @@ public class RequestService: RequestServiceProtocol {
                                                 }
                                             }
                 })
+    }
+
+    public func makeFileDataRequest<Foo: Decodable>(request: RequestProtocol & BucketProtocol,
+                                                    responseType: Foo.Type,
+                                                    onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
+                                                    onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
+                                                    onEncodingError: @escaping (_ error: Error?) -> Void,
+                                                    queue: DispatchQueue = DispatchQueue.main,
+                                                    codingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) {
+
+        let headers: HTTPHeaders = ["X-Secret": request.getXSecret()]
+
+        let multipartFormData: (MultipartFormData) -> Void = { (multipartFormData) in
+            let parameters = request.getParams()
+            parameters?.forEach({ (key, value) in
+                if let image = value as?  UIImage {
+                    if let imageData = image.jpegData(compressionQuality: 0.6) {
+                        multipartFormData.append(imageData, withName: key, fileName: request.getFileName(), mimeType: "image/*")
+                    }
+                }
+            })
+        }
+
+        let encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void) = { (encodingResult) in
+            switch encodingResult {
+            case .success(let upload, _, _ ):
+                upload.validate()
+                    .responseJSON { response in
+                        switch response.result {
+                        case .success:
+                            if let data = response.data {
+                                do {
+                                    let decoder = JSONDecoder()
+                                    if response.result.isSuccess {
+                                        onComplete(try decoder.decode(Foo.self, from: data), nil)
+                                    } else {
+                                        onError(response.error, response.response?.statusCode, nil)
+                                    }
+                                } catch let error {
+                                    onError(error, response.response?.statusCode, nil)
+                                }
+                            } else {
+                                onError(response.error, response.response?.statusCode, nil)
+                            }
+                        case .failure(let error):
+                            onError(error, response.response?.statusCode, nil)
+                        }
+                }
+
+            case .failure(let encodingError):
+                queue.async {
+                    onEncodingError(encodingError)
+                }
+            }
+
+        }
+
+        self.sessionManager.upload(multipartFormData: multipartFormData,
+                              usingThreshold: UInt64.init(),
+                              to: self.getRequestUrl(request),
+                              method: request.getMethod(),
+                              headers: headers,
+                              encodingCompletion: encodingCompletion)
     }
 
     private func getRequestUrl(_ request: RequestProtocol) -> String {
