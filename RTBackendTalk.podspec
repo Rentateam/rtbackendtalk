@@ -25,7 +25,7 @@ This library offers engine for creating network requests and processing them.
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'RentaTeam' => 'info@rentateam.ru' }
   s.source           = { :git => 'https://github.com/Rentateam/rtbackendtalk.git', :tag => s.version.to_s }
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5.0' }
 
   s.swift_version = '5.0'
   s.ios.deployment_target = '10.0'
@@ -34,4 +34,5 @@ This library offers engine for creating network requests and processing them.
   
   s.dependency 'Alamofire', '~> 4.7.1'
   s.dependency 'AlamofireActivityLogger', '~> 2.4.0'
+  s.dependency 'CryptoSwift', '~> 1.0'
 end

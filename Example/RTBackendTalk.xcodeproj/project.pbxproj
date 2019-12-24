@@ -13,6 +13,7 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		B735B9D6A282A058101E7D15 /* Pods_RTBackendTalk_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A71716164D2C7AA0C3E8A75 /* Pods_RTBackendTalk_Example.framework */; };
+		EBD6649C23B2466F00F9D964 /* TestBucketRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD6649B23B2466F00F9D964 /* TestBucketRequest.swift */; };
 		EBEC2424207F7CDA00EFFEB6 /* TestRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEC2423207F7CDA00EFFEB6 /* TestRequest.swift */; };
 		EBEC2426207F7D9A00EFFEB6 /* TestDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEC2425207F7D9A00EFFEB6 /* TestDataRequest.swift */; };
 		EBEF4FBE23AD206E00FC7FDB /* Test2Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEF4FBD23AD206E00FC7FDB /* Test2Request.swift */; };
@@ -49,6 +50,7 @@
 		C59E1C5DF7740F97D89FD157 /* RTBackendTalk.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = RTBackendTalk.podspec; path = ../RTBackendTalk.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C9472D265BB8F803F1D26D2B /* Pods-RTBackendTalk_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RTBackendTalk_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RTBackendTalk_Example/Pods-RTBackendTalk_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		E88C42DC08BAC8732B7FDB50 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		EBD6649B23B2466F00F9D964 /* TestBucketRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBucketRequest.swift; sourceTree = "<group>"; };
 		EBEC2423207F7CDA00EFFEB6 /* TestRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRequest.swift; sourceTree = "<group>"; };
 		EBEC2425207F7D9A00EFFEB6 /* TestDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataRequest.swift; sourceTree = "<group>"; };
 		EBEF4FBD23AD206E00FC7FDB /* Test2Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test2Request.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				EBEC2425207F7D9A00EFFEB6 /* TestDataRequest.swift */,
 				EBF2471D20BECA2000B7AC3B /* TestMultipartRequest.swift */,
 				EBEF4FBD23AD206E00FC7FDB /* Test2Request.swift */,
+				EBD6649B23B2466F00F9D964 /* TestBucketRequest.swift */,
 			);
 			name = "Example for RTBackendTalk";
 			path = RTBackendTalk;
@@ -299,12 +302,14 @@
 				"${PODS_ROOT}/Target Support Files/Pods-RTBackendTalk_Example/Pods-RTBackendTalk_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireActivityLogger/AlamofireActivityLogger.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RTBackendTalk/RTBackendTalk.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireActivityLogger.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RTBackendTalk.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,6 +362,7 @@
 				EBEC2424207F7CDA00EFFEB6 /* TestRequest.swift in Sources */,
 				EBF2471E20BECA2000B7AC3B /* TestMultipartRequest.swift in Sources */,
 				EBEF4FBE23AD206E00FC7FDB /* Test2Request.swift in Sources */,
+				EBD6649C23B2466F00F9D964 /* TestBucketRequest.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				EBEC2426207F7D9A00EFFEB6 /* TestDataRequest.swift in Sources */,
@@ -453,6 +459,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -501,6 +508,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

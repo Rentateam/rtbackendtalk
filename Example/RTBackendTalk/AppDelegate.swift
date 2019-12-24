@@ -103,6 +103,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         },
                                         queue: DispatchQueue.main)
         
+        requestService.makeFileDataRequest(request: TestBucketRequest(),
+                                           responseType: [Post].self,
+                                           onComplete: { _, _ in
+                                            print("Bucket request completed")
+        },
+                                           onError: { _,_,_ in
+                                            print("Bucket request error")
+        },
+                                           onEncodingError: { _ in
+                                            print("encoding error")
+        },
+                                           queue: DispatchQueue.main)
+        
         return true
     }
 
