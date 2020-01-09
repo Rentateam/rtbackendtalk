@@ -1,5 +1,4 @@
 import Foundation
-import CryptoSwift
 
 public protocol BucketProtocol: class {
     func getFileName() -> String
