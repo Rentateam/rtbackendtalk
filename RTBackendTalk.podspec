@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RTBackendTalk'
-  s.version          = '0.1.9'
+  s.version          = '0.1.10'
   s.summary          = 'A library to add support for network requests over Alamofire'
 
 # This description is used to generate tags and improve search results.
@@ -34,5 +34,4 @@ This library offers engine for creating network requests and processing them.
   
   s.dependency 'Alamofire', '~> 4.7.1'
   s.dependency 'AlamofireActivityLogger', '~> 2.4.0'
-  s.dependency 'CryptoSwift', '~> 1.0'
 end
