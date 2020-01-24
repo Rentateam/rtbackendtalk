@@ -3,6 +3,7 @@ import RTBackendTalk
 import Alamofire
 
 class TestRequest: RequestProtocol {
+    
     func getUrl() -> String {
         return "/posts"
     }
@@ -17,5 +18,9 @@ class TestRequest: RequestProtocol {
 
     func getParams() -> Parameters? {
         return nil
+    }
+    
+    func isAuthorizationRequired() -> Bool {
+        false
     }
 }

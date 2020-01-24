@@ -3,6 +3,7 @@ import RTBackendTalk
 import Alamofire
 
 class TestBucketRequest: RequestProtocol {
+    
     func getUrl() -> String {
         return "/posts/1234"
     }
@@ -31,5 +32,9 @@ extension TestBucketRequest: BucketProtocol {
     
     func getXSecretSalt() -> String {
         return "Here_would_be_some_salt"
+    }
+    
+    func isAuthorizationRequired() -> Bool {
+        false
     }
 }

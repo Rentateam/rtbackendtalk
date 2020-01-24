@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let requestService = RequestService(queue: DispatchQueue.global(qos: .utility),
                                             baseUrl: "https://jsonplaceholder.typicode.com",
                                             headersProvider: self,
-                                            authHandler: self,
+                                            authorizationProvider: self,
                                             configuration: configuration) { request in
                                                 request.log(level: .info,
                                                             options: [.onlyDebug, .jsonPrettyPrint, .includeSeparator],
@@ -150,12 +150,26 @@ extension AppDelegate: RequestHeadersProviderProtocol {
     }
 }
 
-extension AppDelegate: AuthHandlerProtocol {
-    func isAuthorizationExpired(response: HTTPURLResponse?) -> Bool {
+extension AppDelegate: AuthorizationProviderProtocol {
+    func isUserAuthorized() -> Bool {
+        return true
+    }
+    
+    func getAuthToken() -> String? {
+        return "auth token"
+    }
+    
+    func refreshToken(tokenRefreshed: ((String?) -> Void)?) {
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
+            tokenRefreshed?("refreshed auth token")
+        }
+    }
+    
+    func isTokenExpired(response: HTTPURLResponse?) -> Bool {
         return response?.statusCode == 401
     }
-
-    func authorizationExpired() {
+    
+    func sendTokenExpiredNotification() {
         print("Authorization expired :( ")
     }
 
