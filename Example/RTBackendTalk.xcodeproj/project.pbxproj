@@ -12,7 +12,8 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		B735B9D6A282A058101E7D15 /* Pods_RTBackendTalk_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A71716164D2C7AA0C3E8A75 /* Pods_RTBackendTalk_Example.framework */; };
+		E37FFB4A23DB5FF9009180F3 /* Pods_RTBackendTalk_Example.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E37FFB4823DB5FF9009180F3 /* Pods_RTBackendTalk_Example.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E3E23C3823DB610600FB8AAF /* Pods_RTBackendTalk_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E23C3723DB610600FB8AAF /* Pods_RTBackendTalk_Example.framework */; };
 		EBD6649C23B2466F00F9D964 /* TestBucketRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD6649B23B2466F00F9D964 /* TestBucketRequest.swift */; };
 		EBEC2424207F7CDA00EFFEB6 /* TestRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEC2423207F7CDA00EFFEB6 /* TestRequest.swift */; };
 		EBEC2426207F7D9A00EFFEB6 /* TestDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEC2425207F7D9A00EFFEB6 /* TestDataRequest.swift */; };
@@ -30,6 +31,20 @@
 			remoteInfo = RTBackendTalk;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E37FFB4B23DB5FF9009180F3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E37FFB4A23DB5FF9009180F3 /* Pods_RTBackendTalk_Example.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3A71716164D2C7AA0C3E8A75 /* Pods_RTBackendTalk_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RTBackendTalk_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +64,10 @@
 		BA7EE495FD8192B908BB84D9 /* Pods-RTBackendTalk_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RTBackendTalk_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-RTBackendTalk_Example/Pods-RTBackendTalk_Example.release.xcconfig"; sourceTree = "<group>"; };
 		C59E1C5DF7740F97D89FD157 /* RTBackendTalk.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = RTBackendTalk.podspec; path = ../RTBackendTalk.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C9472D265BB8F803F1D26D2B /* Pods-RTBackendTalk_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RTBackendTalk_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RTBackendTalk_Example/Pods-RTBackendTalk_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		E37FFB4023DB5FB9009180F3 /* RTBackendTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RTBackendTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E37FFB4423DB5FD2009180F3 /* Pods_RTBackendTalk_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_RTBackendTalk_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E37FFB4823DB5FF9009180F3 /* Pods_RTBackendTalk_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_RTBackendTalk_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3E23C3723DB610600FB8AAF /* Pods_RTBackendTalk_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_RTBackendTalk_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E88C42DC08BAC8732B7FDB50 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		EBD6649B23B2466F00F9D964 /* TestBucketRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBucketRequest.swift; sourceTree = "<group>"; };
 		EBEC2423207F7CDA00EFFEB6 /* TestRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRequest.swift; sourceTree = "<group>"; };
@@ -62,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B735B9D6A282A058101E7D15 /* Pods_RTBackendTalk_Example.framework in Frameworks */,
+				E3E23C3823DB610600FB8AAF /* Pods_RTBackendTalk_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +173,10 @@
 		6B66E801793A03C3DDC76F3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E3E23C3723DB610600FB8AAF /* Pods_RTBackendTalk_Example.framework */,
+				E37FFB4823DB5FF9009180F3 /* Pods_RTBackendTalk_Example.framework */,
+				E37FFB4423DB5FD2009180F3 /* Pods_RTBackendTalk_Example.framework */,
+				E37FFB4023DB5FB9009180F3 /* RTBackendTalk.framework */,
 				3A71716164D2C7AA0C3E8A75 /* Pods_RTBackendTalk_Example.framework */,
 				AD15F390C6235037E4131D42 /* Pods_RTBackendTalk_Tests.framework */,
 			);
@@ -184,6 +207,7 @@
 				607FACCE1AFB9204008FA782 /* Resources */,
 				755BB9F5FD2C29E63F3A0696 /* [CP] Embed Pods Frameworks */,
 				EBEC1BA223AA259900449B12 /* ShellScript */,
+				E37FFB4B23DB5FF9009180F3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -330,7 +354,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  exit 1\nfi\n";
+			shellScript = "#if which swiftlint >/dev/null; then\n#  ${PODS_ROOT}/SwiftLint/swiftlint\n#else\n#  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n#  exit 1\n#fi\n";
 		};
 		FD2402494D805DAED8F60474 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

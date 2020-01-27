@@ -15,27 +15,29 @@
 			dependencies = (
 			);
 			name = SwiftLint;
-			productName = SwiftLint;
 		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		07A32F654BBD800DCE607B38C608E9F1 /* MultipleResponseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81B99849CE58EDE892471A4A4E7D283 /* MultipleResponseInfo.swift */; };
+		0338C6DEE8990BFA9BF047700C076075 /* RTBackendTalk-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DD335AC26F87D9895E9FECDD87FE6C54 /* RTBackendTalk-dummy.m */; };
 		089E71B65E4DDCA4E8732503D186E4EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDEC52BBC7884F6993EADBC09F6BC594 /* Foundation.framework */; };
-		08B8A4C1C29860383E32EC5A9B762DA8 /* RequestServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C21F3FAB167A62E900564DEF5A7F70 /* RequestServiceProtocol.swift */; };
+		0928D1C64B3185E9840D5DAEF75FA70A /* RequestMultipartProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECC999490AB07E4C8A74838D0748950 /* RequestMultipartProtocol.swift */; };
 		0C5E11DE24DAA737704B355F5F2F3426 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55041FC11A58E8BF6816C2E26FD97512 /* ParameterEncoding.swift */; };
+		0FCC0C2588BC83ABFB37F42FC88973D5 /* RequestHeadersProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19765CB01CDE54006D1F99977D300B07 /* RequestHeadersProviderProtocol.swift */; };
 		132E0F619E4338E5D1B27E4C72076B3F /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BCF4D6A79BB3C8C2520468B79B1789 /* Notifications.swift */; };
 		15E270C303F61479349AEC3F79EC84F8 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658FE090F21269C15611474B01F69CEE /* Tools.swift */; };
 		18797E64C00CCA7F28CB18A2204E812A /* AlamofireActivityLogger-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EAE25A64BE8ECAD5DD3B11632784E23B /* AlamofireActivityLogger-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		19317E36524117ABDFD0A6FE2AEB3955 /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD01BC4C39CBBF6BBE1EEF9B7AC3E138 /* RequestProtocol.swift */; };
 		1945CD5D63A1C164AEAAA9A33E85571E /* Alamofire-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C88F378C9BF2B0CB82276FD4F710F4F /* Alamofire-dummy.m */; };
 		1986B50C74F1697EA43F68335C93CEB3 /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA485D9AF2F06D2E315D33DEA7C765E /* MultipartFormData.swift */; };
 		1B36FAFF54E55FAE151A04C5EB98C357 /* AlamofireActivityLogger-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94962588651190BF357F2D93C5B9CA /* AlamofireActivityLogger-dummy.m */; };
-		2AC257E36D5B5ABA4EAED07F1AC29D83 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45CB0E633DF473BA77F7B79662B65FA /* String+.swift */; };
+		1F9D5E1407D761F15105AFC3A3385696 /* AuthorizationProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583FC7D323EEED40CB4DACF6ADED3FF0 /* AuthorizationProviderProtocol.swift */; };
 		2C61B040BA6A9A7AE66C4D9BA26D5520 /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95655B0D6CA28E3C905AE53D615575B1 /* SessionDelegate.swift */; };
-		31ED98E456182472E1CAC416BD9BF30B /* RTBackendTalk-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DD335AC26F87D9895E9FECDD87FE6C54 /* RTBackendTalk-dummy.m */; };
+		2C8F671C84443FA820E21209D0FC4CF8 /* MultipleRequestInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA569558904D99F0C1719078C4514E4C /* MultipleRequestInfo.swift */; };
 		3571F958A3907B3A806E62D50C2550D4 /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A4ECAD89ED6D2E7CF6C24EB2C1B06 /* NetworkReachabilityManager.swift */; };
+		3D515691E4C6109CADC3EEB535F05E15 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45CB0E633DF473BA77F7B79662B65FA /* String+.swift */; };
+		47076E1736065DB5631575B91DDA9114 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92163120199910361FD067985CFC47D7 /* RequestService.swift */; };
 		53791F5E5F07400F92CFDFC89A432305 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3901C6EA6C42A51AEC9D856CB52F5E /* Validation.swift */; };
+		566987C0BD7D115E8268AB113500DFBF /* MultipartConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5168649ED5E68E6F9364B6B6171B15C /* MultipartConfigurator.swift */; };
 		5C9C66D4139F55CCAEA041A5740F5074 /* Pods-RTBackendTalk_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BCDD283C3E57379FDAE9F9A53E6270E /* Pods-RTBackendTalk_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		64744C911253C3E01461FAD7C935C8D7 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F5A9EF6E322EC580EDC0C1CDA14EB6 /* Result.swift */; };
 		7664FD4F59A0C00866CBAE60B0A3AD64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDEC52BBC7884F6993EADBC09F6BC594 /* Foundation.framework */; };
@@ -45,29 +47,26 @@
 		90A6B43E2F9A080C5A4B9C8B663FB31B /* LoggeableRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D96780046BA3AE463883BDE15092E8D /* LoggeableRequest.swift */; };
 		931BBB8230A25161D5C37528A8F9FECF /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7CB0A40DFAF8C468732B35B1AC771 /* SessionManager.swift */; };
 		933FDA5970AA525D6CB92BFEBA2BAB4A /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9504F6B3260B8A0688512BE21053C1D2 /* Timeline.swift */; };
+		943FA81856AEB38AB8E3930B1A4C6B94 /* MultipleResponseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81B99849CE58EDE892471A4A4E7D283 /* MultipleResponseInfo.swift */; };
 		98A929C8E9012AB167672714FFD2113C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB43E840C232CCB28940A44170EED81 /* Request.swift */; };
 		9AD86179AFB6DF6EF65A8121906B054D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675B55311136D8DAB01F177BFD0B7 /* Logger.swift */; };
 		9D65A393D333C1FD0367A3320A403BA4 /* Pods-RTBackendTalk_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E383AF121B01175AD76F72366121FBD7 /* Pods-RTBackendTalk_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9F58CF0BF625C333040D19D31B332792 /* BucketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD7E8D16E05EAB49B1C3FACED2BAEAF /* BucketProtocol.swift */; };
-		AAEA109F96A89B2C88782F7CB9EBF102 /* RequestMultipartProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECC999490AB07E4C8A74838D0748950 /* RequestMultipartProtocol.swift */; };
 		ABD23A79E3A923C3A50D15E998E86680 /* Pods-RTBackendTalk_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 824FFA7156A89AEDCB1B96130B6B55CA /* Pods-RTBackendTalk_Example-dummy.m */; };
 		AFC64B1097F7355FF423D6A73E9C7210 /* TaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52330C202F8DAE4F8C276491D671B0D4 /* TaskDelegate.swift */; };
 		B0D9FAA808BF5E10F25FCD371CF38ABA /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A1FD4A34F5C9BE84E64B793F00ED95 /* Alamofire.framework */; };
+		B1AA7273CB78DFACBF56735D3B9870E9 /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD01BC4C39CBBF6BBE1EEF9B7AC3E138 /* RequestProtocol.swift */; };
 		B4D598D79D550B8DED31074D2C4D695D /* RTBackendTalk-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F370EF41BEA46C6F5D7642C9A8A820A /* RTBackendTalk-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B5BF1D46488686B6C9F3CA7A51235151 /* RequestHeadersProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19765CB01CDE54006D1F99977D300B07 /* RequestHeadersProviderProtocol.swift */; };
+		BA0BD9346CBD82BC4AB3CBA205F33C9D /* BucketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD7E8D16E05EAB49B1C3FACED2BAEAF /* BucketProtocol.swift */; };
 		BE5815538557A977A83DD6BD8106E5FD /* AlamofireActivityLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B1CF43775163B19AE4E61C2E514C86 /* AlamofireActivityLogger.framework */; };
 		BEE6B677416CA71C981D1D3F60B18C96 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B3CB46CCF6798DD8FA2DAD3802E3C /* Alamofire.swift */; };
-		C03371EDA7AB47D518F84EA1B335099E /* AuthorizationProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258693F980AF60D64190ECEF088593E4 /* AuthorizationProviderProtocol.swift */; };
 		C35E5A1D5A4A6E9F0D10E33F213A255C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDEC52BBC7884F6993EADBC09F6BC594 /* Foundation.framework */; };
-		C94F1A906388BF1CE594D12DFAA131E4 /* MultipleRequestInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA569558904D99F0C1719078C4514E4C /* MultipleRequestInfo.swift */; };
 		D3D8C379C6E4FB487E5ABD6800AD7B7E /* DispatchQueue+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD068B722240B1CF02E2DE80047681C3 /* DispatchQueue+Alamofire.swift */; };
 		D65C254F5ABF2CB5ECEE50FE8F8E1A80 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1FD7B581D8116DF972D69577295F1D /* Response.swift */; };
 		DB6B403BCF7BD9E032BD8C639D5D0589 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDEC52BBC7884F6993EADBC09F6BC594 /* Foundation.framework */; };
 		E04A1959C82DA587B7E0EBB4B5998E9C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDEC52BBC7884F6993EADBC09F6BC594 /* Foundation.framework */; };
 		E3747EC31FCCA97D75A81FC700CF7E24 /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B75966F70EB4596176B1BF26B14829 /* ResponseSerialization.swift */; };
-		EB87F598CA42A1BBEED7952F90FFEB31 /* MultipartConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5168649ED5E68E6F9364B6B6171B15C /* MultipartConfigurator.swift */; };
 		F13F2AA7F2E6D95A181CAB99B900D531 /* ServerTrustPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E618D2B6FAC83BC9BBDDC563954089A7 /* ServerTrustPolicy.swift */; };
-		F2F07EDDDEB84E4B29429E6F3D4E7122 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92163120199910361FD067985CFC47D7 /* RequestService.swift */; };
+		F5A71D687A739C1226B5F2F801A5FC4C /* RequestServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C21F3FAB167A62E900564DEF5A7F70 /* RequestServiceProtocol.swift */; };
 		F7B74645E07C39771156A1FA413B98D4 /* Alamofire-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B2D889E2E3804F754CD170E2B16760 /* Alamofire-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -141,19 +140,18 @@
 		1C95E403E51FE0B15FF8ABAE87017E41 /* Pods-RTBackendTalk_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RTBackendTalk_Example.release.xcconfig"; sourceTree = "<group>"; };
 		1CAE25B86BAF76EBDE2AD6F17629ADD6 /* Pods-RTBackendTalk_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RTBackendTalk_Tests-Info.plist"; sourceTree = "<group>"; };
 		222675B55311136D8DAB01F177BFD0B7 /* Logger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = alamofire_activity_logger/ActivityLogger/Logger.swift; sourceTree = "<group>"; };
-		258693F980AF60D64190ECEF088593E4 /* AuthorizationProviderProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AuthorizationProviderProtocol.swift; sourceTree = "<group>"; };
 		26B75966F70EB4596176B1BF26B14829 /* ResponseSerialization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ResponseSerialization.swift; path = Source/ResponseSerialization.swift; sourceTree = "<group>"; };
 		28526FBFC35521B8D22ADA72F9E3723F /* SwiftLint.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.xcconfig; sourceTree = "<group>"; };
 		2D8A467A0DB6A4D1D5F00DDA9FF7D61C /* AlamofireActivityLogger-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AlamofireActivityLogger-prefix.pch"; sourceTree = "<group>"; };
 		2E7A4ECAD89ED6D2E7CF6C24EB2C1B06 /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkReachabilityManager.swift; path = Source/NetworkReachabilityManager.swift; sourceTree = "<group>"; };
 		2F370EF41BEA46C6F5D7642C9A8A820A /* RTBackendTalk-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RTBackendTalk-umbrella.h"; sourceTree = "<group>"; };
-		3264720B3AEC2E87DFF6F467D51E7B10 /* Pods_RTBackendTalk_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RTBackendTalk_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3264720B3AEC2E87DFF6F467D51E7B10 /* Pods_RTBackendTalk_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_RTBackendTalk_Example.framework; path = "Pods-RTBackendTalk_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3272C02A541DE2485D856477F0BAD5C5 /* Pods-RTBackendTalk_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-RTBackendTalk_Example.modulemap"; sourceTree = "<group>"; };
 		35003BAFB8698AEB9181248B67524030 /* Pods-RTBackendTalk_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RTBackendTalk_Example-frameworks.sh"; sourceTree = "<group>"; };
 		38C21F3FAB167A62E900564DEF5A7F70 /* RequestServiceProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestServiceProtocol.swift; path = RTBackendTalk/Classes/RequestServiceProtocol.swift; sourceTree = "<group>"; };
 		3C88F378C9BF2B0CB82276FD4F710F4F /* Alamofire-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Alamofire-dummy.m"; sourceTree = "<group>"; };
-		3D9133778E74341283E5FDD063774C19 /* Pods_RTBackendTalk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RTBackendTalk_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		41EFD30D6BB570815C8AF372205E843B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		3D9133778E74341283E5FDD063774C19 /* Pods_RTBackendTalk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_RTBackendTalk_Tests.framework; path = "Pods-RTBackendTalk_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		41EFD30D6BB570815C8AF372205E843B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		45DD368C32B7B080B414506FB5E39932 /* RTBackendTalk-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RTBackendTalk-prefix.pch"; sourceTree = "<group>"; };
 		4A1FD7B581D8116DF972D69577295F1D /* Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Source/Response.swift; sourceTree = "<group>"; };
 		4BD7E8D16E05EAB49B1C3FACED2BAEAF /* BucketProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BucketProtocol.swift; sourceTree = "<group>"; };
@@ -162,21 +160,22 @@
 		4F3901C6EA6C42A51AEC9D856CB52F5E /* Validation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Validation.swift; path = Source/Validation.swift; sourceTree = "<group>"; };
 		52330C202F8DAE4F8C276491D671B0D4 /* TaskDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskDelegate.swift; path = Source/TaskDelegate.swift; sourceTree = "<group>"; };
 		55041FC11A58E8BF6816C2E26FD97512 /* ParameterEncoding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ParameterEncoding.swift; path = Source/ParameterEncoding.swift; sourceTree = "<group>"; };
-		5D4B3AC4207E7DCFAB7F7194723CEA8F /* RTBackendTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RTBackendTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		583FC7D323EEED40CB4DACF6ADED3FF0 /* AuthorizationProviderProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AuthorizationProviderProtocol.swift; sourceTree = "<group>"; };
+		5D4B3AC4207E7DCFAB7F7194723CEA8F /* RTBackendTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = RTBackendTalk.framework; path = RTBackendTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EE7CB0A40DFAF8C468732B35B1AC771 /* SessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionManager.swift; path = Source/SessionManager.swift; sourceTree = "<group>"; };
 		658FE090F21269C15611474B01F69CEE /* Tools.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Tools.swift; path = alamofire_activity_logger/ActivityLogger/Tools.swift; sourceTree = "<group>"; };
 		68D7859A98CF047EBBADDD289C2D9829 /* Alamofire-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-prefix.pch"; sourceTree = "<group>"; };
 		6D96780046BA3AE463883BDE15092E8D /* LoggeableRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoggeableRequest.swift; path = alamofire_activity_logger/ActivityLogger/LoggeableRequest.swift; sourceTree = "<group>"; };
-		6DECAB875D18FDCADD967FCCC7813805 /* RTBackendTalk.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = RTBackendTalk.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		6DECAB875D18FDCADD967FCCC7813805 /* RTBackendTalk.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = RTBackendTalk.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6F032AB13D05ED28C08C33AF0ADF134C /* AlamofireActivityLogger.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = AlamofireActivityLogger.modulemap; sourceTree = "<group>"; };
 		70B1CF43775163B19AE4E61C2E514C86 /* AlamofireActivityLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlamofireActivityLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71E716DFC1D2FEA62F9642391E17034A /* AlamofireActivityLogger-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "AlamofireActivityLogger-Info.plist"; sourceTree = "<group>"; };
 		7CB43E840C232CCB28940A44170EED81 /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Source/Request.swift; sourceTree = "<group>"; };
 		824FFA7156A89AEDCB1B96130B6B55CA /* Pods-RTBackendTalk_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RTBackendTalk_Example-dummy.m"; sourceTree = "<group>"; };
-		8303D9FD1388A0B1093FA4BDE148E3FF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		8303D9FD1388A0B1093FA4BDE148E3FF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		835452528AA74CEBB5093DA5B70EA589 /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
-		8AC77C753EB98D70D4237600C5544745 /* AlamofireActivityLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlamofireActivityLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AC77C753EB98D70D4237600C5544745 /* AlamofireActivityLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AlamofireActivityLogger.framework; path = AlamofireActivityLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BCDD283C3E57379FDAE9F9A53E6270E /* Pods-RTBackendTalk_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RTBackendTalk_Tests-umbrella.h"; sourceTree = "<group>"; };
 		90A1FD4A34F5C9BE84E64B793F00ED95 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92163120199910361FD067985CFC47D7 /* RequestService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestService.swift; path = RTBackendTalk/Classes/RequestService.swift; sourceTree = "<group>"; };
@@ -188,7 +187,7 @@
 		98EAD77A866966ECA2E8223FEFB3002C /* Alamofire.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Alamofire.modulemap; sourceTree = "<group>"; };
 		98F5A9EF6E322EC580EDC0C1CDA14EB6 /* Result.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Source/Result.swift; sourceTree = "<group>"; };
 		9CA485D9AF2F06D2E315D33DEA7C765E /* MultipartFormData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartFormData.swift; path = Source/MultipartFormData.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A08DEBD61ED308F4C3ACF7F2A8F3D9D5 /* RTBackendTalk.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = RTBackendTalk.modulemap; sourceTree = "<group>"; };
 		A27BA0A2392580C7D06D263326D20857 /* Pods-RTBackendTalk_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RTBackendTalk_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		A8003B4E2AE7907D938B7A793B566A36 /* AlamofireActivityLogger.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AlamofireActivityLogger.xcconfig; sourceTree = "<group>"; };
@@ -316,6 +315,7 @@
 				4F3901C6EA6C42A51AEC9D856CB52F5E /* Validation.swift */,
 				9D5BA67A856D0CDC72AAFEDBA8F471A7 /* Support Files */,
 			);
+			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -337,6 +337,7 @@
 				658FE090F21269C15611474B01F69CEE /* Tools.swift */,
 				6B0FBC7E072FD659741E21F98C17EF9D /* Support Files */,
 			);
+			name = AlamofireActivityLogger;
 			path = AlamofireActivityLogger;
 			sourceTree = "<group>";
 		};
@@ -403,7 +404,17 @@
 			children = (
 				6BC6345504DA3B6C56220DF2452BA154 /* Support Files */,
 			);
+			name = SwiftLint;
 			path = SwiftLint;
+			sourceTree = "<group>";
+		};
+		999FFC2007677238DB07E4C8FA57F709 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				583FC7D323EEED40CB4DACF6ADED3FF0 /* AuthorizationProviderProtocol.swift */,
+			);
+			name = Auth;
+			path = RTBackendTalk/Classes/Auth;
 			sourceTree = "<group>";
 		};
 		9D5BA67A856D0CDC72AAFEDBA8F471A7 /* Support Files */ = {
@@ -501,7 +512,7 @@
 				19765CB01CDE54006D1F99977D300B07 /* RequestHeadersProviderProtocol.swift */,
 				92163120199910361FD067985CFC47D7 /* RequestService.swift */,
 				38C21F3FAB167A62E900564DEF5A7F70 /* RequestServiceProtocol.swift */,
-				FCC5F53DCDE050FC60230405F6AD2566 /* Auth */,
+				999FFC2007677238DB07E4C8FA57F709 /* Auth */,
 				F0496EECC9F6D1917EA1B7A0AC8170C7 /* Crypto */,
 				F01AEE84F8101830F7C768B365F3140D /* Extensions */,
 				BEC31DF7CB592F71DBD2F08D58F6ABF1 /* Multipart */,
@@ -530,15 +541,6 @@
 			);
 			name = Crypto;
 			path = RTBackendTalk/Classes/Crypto;
-			sourceTree = "<group>";
-		};
-		FCC5F53DCDE050FC60230405F6AD2566 /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				258693F980AF60D64190ECEF088593E4 /* AuthorizationProviderProtocol.swift */,
-			);
-			name = Auth;
-			path = RTBackendTalk/Classes/Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -652,7 +654,7 @@
 			buildConfigurationList = B32002FD61CE69029CAC07D2B9DD6C0A /* Build configuration list for PBXNativeTarget "RTBackendTalk" */;
 			buildPhases = (
 				309B91836848D87368E5BD67D31FB8B0 /* Headers */,
-				203D7105D12E444F0487D14430020597 /* Sources */,
+				49C1D648D3B485E2873EEE4D711539DE /* Sources */,
 				860450C8D07E7ABA1F9A651A47BE2210 /* Frameworks */,
 				52AA5552A5030282F29EC02BF4BF35BA /* Resources */,
 			);
@@ -756,25 +758,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		203D7105D12E444F0487D14430020597 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C03371EDA7AB47D518F84EA1B335099E /* AuthorizationProviderProtocol.swift in Sources */,
-				9F58CF0BF625C333040D19D31B332792 /* BucketProtocol.swift in Sources */,
-				EB87F598CA42A1BBEED7952F90FFEB31 /* MultipartConfigurator.swift in Sources */,
-				C94F1A906388BF1CE594D12DFAA131E4 /* MultipleRequestInfo.swift in Sources */,
-				07A32F654BBD800DCE607B38C608E9F1 /* MultipleResponseInfo.swift in Sources */,
-				B5BF1D46488686B6C9F3CA7A51235151 /* RequestHeadersProviderProtocol.swift in Sources */,
-				AAEA109F96A89B2C88782F7CB9EBF102 /* RequestMultipartProtocol.swift in Sources */,
-				19317E36524117ABDFD0A6FE2AEB3955 /* RequestProtocol.swift in Sources */,
-				F2F07EDDDEB84E4B29429E6F3D4E7122 /* RequestService.swift in Sources */,
-				08B8A4C1C29860383E32EC5A9B762DA8 /* RequestServiceProtocol.swift in Sources */,
-				31ED98E456182472E1CAC416BD9BF30B /* RTBackendTalk-dummy.m in Sources */,
-				2AC257E36D5B5ABA4EAED07F1AC29D83 /* String+.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		2DDFD9AC10F181CD7130BDF5F9E0502B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -797,6 +780,25 @@
 				AFC64B1097F7355FF423D6A73E9C7210 /* TaskDelegate.swift in Sources */,
 				933FDA5970AA525D6CB92BFEBA2BAB4A /* Timeline.swift in Sources */,
 				53791F5E5F07400F92CFDFC89A432305 /* Validation.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49C1D648D3B485E2873EEE4D711539DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F9D5E1407D761F15105AFC3A3385696 /* AuthorizationProviderProtocol.swift in Sources */,
+				BA0BD9346CBD82BC4AB3CBA205F33C9D /* BucketProtocol.swift in Sources */,
+				566987C0BD7D115E8268AB113500DFBF /* MultipartConfigurator.swift in Sources */,
+				2C8F671C84443FA820E21209D0FC4CF8 /* MultipleRequestInfo.swift in Sources */,
+				943FA81856AEB38AB8E3930B1A4C6B94 /* MultipleResponseInfo.swift in Sources */,
+				0FCC0C2588BC83ABFB37F42FC88973D5 /* RequestHeadersProviderProtocol.swift in Sources */,
+				0928D1C64B3185E9840D5DAEF75FA70A /* RequestMultipartProtocol.swift in Sources */,
+				B1AA7273CB78DFACBF56735D3B9870E9 /* RequestProtocol.swift in Sources */,
+				47076E1736065DB5631575B91DDA9114 /* RequestService.swift in Sources */,
+				F5A71D687A739C1226B5F2F801A5FC4C /* RequestServiceProtocol.swift in Sources */,
+				0338C6DEE8990BFA9BF047700C076075 /* RTBackendTalk-dummy.m in Sources */,
+				3D515691E4C6109CADC3EEB535F05E15 /* String+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1241,7 +1243,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
