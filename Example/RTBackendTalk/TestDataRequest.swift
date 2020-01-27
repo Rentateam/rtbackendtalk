@@ -3,6 +3,7 @@ import RTBackendTalk
 import Alamofire
 
 class TestDataRequest: RequestProtocol {
+    
     func getUrl() -> String {
         return "/get-data"
     }
@@ -17,5 +18,9 @@ class TestDataRequest: RequestProtocol {
 
     func getParams() -> Parameters? {
         return nil
+    }
+    
+    func isAuthorizationRequired() -> Bool {
+        false
     }
 }
