@@ -6,4 +6,5 @@ public protocol RequestProtocol {
     func isAbsoluteUrl() -> Bool
     func getMethod() -> HTTPMethod
     func getParams() -> Parameters?
+    func isAuthorizationRequired() -> Bool
 }

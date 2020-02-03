@@ -3,6 +3,7 @@ import RTBackendTalk
 import Alamofire
 
 class TestMultipartRequest: RequestMultipartProtocol {
+    
     private let photoList: [UIImage]
 
     init(photoList: [UIImage]) {
@@ -39,5 +40,9 @@ class TestMultipartRequest: RequestMultipartProtocol {
         default:
             break
         }
+    }
+    
+    func isAuthorizationRequired() -> Bool {
+        return false
     }
 }
