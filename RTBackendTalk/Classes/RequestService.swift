@@ -120,71 +120,6 @@ public class RequestService: RequestServiceProtocol {
         }
     }
 
-    public func makeDataRequest<Foo>(request: RequestProtocol,
-                                     responseType: Foo.Type,
-                                     onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
-                                     onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
-                                     queue: DispatchQueue = DispatchQueue.main,
-                                     codingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) where Foo: Decodable {
-        
-        self.logRequest(self.sessionManager.request(
-            self.getRequestUrl(request),
-            method: request.getMethod(),
-            parameters: request.getParams(),
-            encoding: URLEncoding.default,
-            headers: getHeadersWithAuthTokenIfNeeded(request: request))
-            .validate())
-            .responseJSON(queue: self.queue) { [weak self] response in
-
-                let jsonDecoder = JSONDecoder()
-                jsonDecoder.keyDecodingStrategy = codingStrategy
-
-                switch response.result {
-                case .success:
-
-                    if let jsonData = response.data {
-                        if let json = try? jsonDecoder.decode(responseType, from: jsonData) {
-                            queue.async {
-                                onComplete(json, response.response?.statusCode)
-                            }
-                        } else {
-                            queue.async {
-                                onError(response.error, response.response?.statusCode, nil)
-                            }
-                        }
-                    } else {
-                        queue.async {
-                            onError(response.error, response.response?.statusCode, nil)
-                        }
-                    }
-
-                case .failure(let error):
-                    if self?.authorizationProvider?.isTokenExpired(response: response.response) ?? false {
-                        //Check if number of attempts finished
-                        if self?.numberOfTokenRefreshAttempts == 0 {
-                           onError(response.error, response.response?.statusCode, nil)
-                           self?.authorizationProvider?.sendTokenExpiredNotification()
-                        }
-                        //Make token refresh
-                        self?.authorizationProvider?.refreshToken(tokenRefreshed: { (_) in
-                            self?.numberOfTokenRefreshAttempts -= 1
-                            //Request again after token refresh
-                            self?.makeDataRequest(request: request, responseType: responseType, onComplete: onComplete, onError: onError, queue: queue, codingStrategy: codingStrategy)
-                        })
-                    } else {
-                        var json: Foo?
-                        if let jsonData = response.data {
-                            json = try? jsonDecoder.decode(responseType, from: jsonData)
-                        }
-
-                        queue.async {
-                            onError(error, response.response?.statusCode, json)
-                        }
-                    }
-                }
-        }
-    }
-
     public func makeDataRequest(request: RequestProtocol,
                                 onComplete: @escaping (_ data: Data?, _ statusCode: Int?) -> Void,
                                 onError: @escaping (_ error: Error?, _ statusCode: Int?, _ data: Data?) -> Void,
@@ -198,7 +133,7 @@ public class RequestService: RequestServiceProtocol {
             encoding: URLEncoding.default,
             headers: getHeadersWithAuthTokenIfNeeded(request: request))
             .validate())
-            .responseJSON(queue: self.queue) { [weak self] response in
+            .responseData(queue: self.queue) { [weak self] response in
                 switch response.result {
                 case .success:
                     queue.async {
@@ -223,7 +158,7 @@ public class RequestService: RequestServiceProtocol {
                         }
                     }
                 }
-        }
+            }
     }
 
     public func makeVoidRequest(request: RequestProtocol,
