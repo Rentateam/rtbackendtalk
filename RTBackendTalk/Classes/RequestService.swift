@@ -225,15 +225,15 @@ public class RequestService: RequestServiceProtocol {
                                                 upload.validate()
                                                     .responseJSON(queue: self.queue,
                                                                   completionHandler: { [weak self] (response) in
+                                                        let jsonDecoder = JSONDecoder()
+                                                        jsonDecoder.keyDecodingStrategy = codingStrategy
                                                         switch response.result {
                                                         case .success:
                                                             var foo: Foo?
                                                             if let data = response.data {
-                                                                let decoder = JSONDecoder()
-                                                                decoder.keyDecodingStrategy = codingStrategy
                                                                 if response.result.isSuccess {
                                                                     do {
-                                                                        foo = try decoder.decode(Foo.self, from: data)
+                                                                        foo = try jsonDecoder.decode(Foo.self, from: data)
                                                                         if let foo = foo {
                                                                             queue.async {
                                                                                 onComplete(foo, response.response?.statusCode)
@@ -261,8 +261,13 @@ public class RequestService: RequestServiceProtocol {
                                                                         self?.makeMultipartDataRequest(request: request, responseType: responseType, onComplete: onComplete, onError: onError, onEncodingError: onEncodingError, queue: queue, codingStrategy: codingStrategy)
                                                                     })
                                                                 } else {
+                                                                    var json: Foo?
+                                                                    if let jsonData = response.data {
+                                                                        json = try? jsonDecoder.decode(responseType, from: jsonData)
+                                                                    }
+                                                                
                                                                     queue.async {
-                                                                        onError(error, response.response?.statusCode, nil)
+                                                                        onError(error, response.response?.statusCode, json)
                                                                     }
                                                                 }
                                                             }
@@ -302,13 +307,14 @@ public class RequestService: RequestServiceProtocol {
             case .success(let upload, _, _ ):
                 upload.validate()
                     .responseJSON { [weak self] response in
+                        let jsonDecoder = JSONDecoder()
+                        jsonDecoder.keyDecodingStrategy = codingStrategy
                         switch response.result {
                         case .success:
                             if let data = response.data {
                                 do {
-                                    let decoder = JSONDecoder()
                                     if response.result.isSuccess {
-                                        onComplete(try decoder.decode(Foo.self, from: data), nil)
+                                        onComplete(try jsonDecoder.decode(Foo.self, from: data), nil)
                                     } else {
                                         onError(response.error, response.response?.statusCode, nil)
                                     }
@@ -332,8 +338,13 @@ public class RequestService: RequestServiceProtocol {
                                     self?.makeFileDataRequest(request: request, responseType: responseType, onComplete: onComplete, onError: onError, onEncodingError: onEncodingError, queue: queue, codingStrategy: codingStrategy)
                                 })
                             } else {
+                                var json: Foo?
+                                if let jsonData = response.data {
+                                    json = try? jsonDecoder.decode(responseType, from: jsonData)
+                                }
+                                
                                 queue.async {
-                                    onError(error, response.response?.statusCode, nil)
+                                    onError(error, response.response?.statusCode, json)
                                 }
                             }
                             
