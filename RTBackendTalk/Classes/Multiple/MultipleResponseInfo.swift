@@ -1,10 +1,24 @@
 import Foundation
 public struct MultipleResponseInfo<Foo> where Foo: Decodable {
-    let statusCode: Int?
-    let response: Foo
+    public let statusCode: Int?
+    public let response: Foo
+    
+    public init(statusCode: Int?,
+                response: Foo) {
+        self.statusCode = statusCode
+        self.response = response
+    }
 }
 public struct MultipleResponseErrorInfo<Foo> where Foo: Decodable {
-    let error: Error?
-    let statusCode: Int?
-    let response: Foo?
+    public let error: Error?
+    public let statusCode: Int?
+    public let response: Foo?
+    
+    public init(error: Error?,
+                statusCode: Int?,
+                response: Foo?) {
+        self.error = error
+        self.statusCode = statusCode
+        self.response = response
+    }
 }

@@ -51,8 +51,7 @@ public extension RequestServiceProtocol {
 
     func makeJsonRequests<RequestId, ResponseType: Decodable>(
         requestInfo: [RequestId: MultipleRequestInfo<ResponseType>],
-        onComplete: @escaping (_ successResults: [RequestId: MultipleResponseInfo<ResponseType>], _ errorResults: [RequestId: MultipleResponseErrorInfo<ResponseType>]) -> Void,
-        queue: DispatchQueue) where RequestId: Hashable, ResponseType: Decodable {
+        onComplete: @escaping (_ successResults: [RequestId: MultipleResponseInfo<ResponseType>], _ errorResults: [RequestId: MultipleResponseErrorInfo<ResponseType>]) -> Void) where RequestId: Hashable, ResponseType: Decodable {
         makeJsonRequests(requestInfo: requestInfo,
                          onComplete: onComplete,
                          queue: DispatchQueue.main)
