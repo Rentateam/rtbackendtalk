@@ -1,6 +1,0 @@
-framework module RTBackendTalk {
-  umbrella header "RTBackendTalk-umbrella.h"
-
-  export *
-  module * { export * }
-}
