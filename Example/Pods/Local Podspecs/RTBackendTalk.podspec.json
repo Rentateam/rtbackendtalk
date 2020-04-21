@@ -1,6 +1,6 @@
 {
   "name": "RTBackendTalk",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "summary": "A library to add support for network requests over Alamofire",
   "description": "This library offers engine for creating network requests and processing them.",
   "homepage": "https://github.com/Rentateam/rtbackendtalk",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/Rentateam/rtbackendtalk.git",
-    "tag": "0.1.10"
+    "tag": "0.1.12"
   },
   "pod_target_xcconfig": {
     "SWIFT_VERSION": "5.0"
