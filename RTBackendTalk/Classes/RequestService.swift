@@ -240,26 +240,26 @@ public class RequestService: RequestServiceProtocol {
                                                             jsonDecoder.keyDecodingStrategy = codingStrategy
                                                             switch response.result {
                                                             case .success:
-                                                                var foo: Foo?
                                                                 if let data = response.data {
                                                                     if response.result.isSuccess {
                                                                         do {
-                                                                                    foo = try jsonDecoder.decode(Foo.self, from: data)
-                                                                                    if let foo = foo {
-                                                                                        queue.async {
-                                                                                            onComplete(foo, response.response?.statusCode)
-                                                                                        }
-                                                                                    }
-                                                                                } catch _ {}
-                                                                            }
-                                                                        }
-                                                                        if foo == nil {
+                                                                            let foo = try jsonDecoder.decode(Foo.self, from: data)
                                                                             queue.async {
-                                                                                onError(response.error, response.response?.statusCode, nil)
+                                                                                onComplete(foo, response.response?.statusCode)
+                                                                            }
+                                                                        } catch let error {
+                                                                            queue.async {
+                                                                                onError(error, response.response?.statusCode, nil)
                                                                             }
                                                                         }
-                                                                    case .failure(let error):
-                                                                        if self?.authorizationProvider?.isTokenExpired(response: response.response) ?? false {
+                                                                    } else {
+                                                                        queue.async {
+                                                                            onError(response.error, response.response?.statusCode, nil)
+                                                                        }
+                                                                    }
+                                                                }
+                                                            case .failure(let error):
+                                                                if self?.authorizationProvider?.isTokenExpired(response: response.response) ?? false {
                                                                             //Check if number of attempts finished
                                                                             if self?.numberOfTokenRefreshAttempts == 0 {
                                                                                 queue.async {
