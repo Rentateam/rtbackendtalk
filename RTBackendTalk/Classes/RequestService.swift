@@ -50,13 +50,14 @@ public class RequestService: RequestServiceProtocol {
                 switch response.result {
                 case .success:
                     if let jsonData = response.data {
-                        if let json = try? jsonDecoder.decode(responseType, from: jsonData) {
+                        do {
+                           let json = try jsonDecoder.decode(responseType, from: jsonData)
                             queue.async {
                                 onComplete(json, response.response?.statusCode)
                             }
-                        } else {
+                        } catch let error {
                             queue.async {
-                                onError(response.error, response.response?.statusCode, nil)
+                                onError(error, response.response?.statusCode, nil)
                             }
                         }
                     } else {
