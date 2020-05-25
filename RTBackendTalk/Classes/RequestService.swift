@@ -73,6 +73,7 @@ public class RequestService: RequestServiceProtocol {
                                 onError(response.error, response.response?.statusCode, nil)
                             }
                             self?.authorizationProvider?.sendTokenExpiredNotification()
+                            return
                         }
                         //Make token refresh
                         self?.authorizationProvider?.refreshToken(tokenRefreshed: { (_) in
@@ -155,6 +156,7 @@ public class RequestService: RequestServiceProtocol {
                                 onError(response.error, response.response?.statusCode, nil)
                             }
                             self?.authorizationProvider?.sendTokenExpiredNotification()
+                            return
                         }
                         //Make token refresh
                         self?.authorizationProvider?.refreshToken(tokenRefreshed: { (_) in
@@ -197,6 +199,7 @@ public class RequestService: RequestServiceProtocol {
                                 onError(response.error, response.response?.statusCode)
                             }
                             self?.authorizationProvider?.sendTokenExpiredNotification()
+                            return
                         }
                         //Make token refresh
                         self?.authorizationProvider?.refreshToken(tokenRefreshed: { (_) in
@@ -267,6 +270,7 @@ public class RequestService: RequestServiceProtocol {
                                                                                     onError(response.error, response.response?.statusCode, nil)
                                                                     }
                                                                     self?.authorizationProvider?.sendTokenExpiredNotification()
+                                                                                return
                                                                 }
                                                                 //Make token refresh
                                                                 self?.authorizationProvider?.refreshToken(tokenRefreshed: { (_) in
@@ -351,6 +355,7 @@ public class RequestService: RequestServiceProtocol {
                                         onError(response.error, response.response?.statusCode, nil)
                                     }
                                     self?.authorizationProvider?.sendTokenExpiredNotification()
+                                    return
                                 }
                                 //Make token refresh
                                 self?.authorizationProvider?.refreshToken(tokenRefreshed: { (_) in
