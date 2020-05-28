@@ -11,6 +11,7 @@ public class RequestService: RequestServiceProtocol {
     private let headersProvider: RequestHeadersProviderProtocol?
     private let authorizationProvider: AuthorizationProviderProtocol?
     private let logRequest: RequestServiceLogRequest
+    private let statusCodeProvider: StatusCodeProviderProtocol?
     private let multipartConfigurator: MultipartConfigurator
     public var numberOfTokenRefreshAttempts = 2
     
@@ -18,6 +19,7 @@ public class RequestService: RequestServiceProtocol {
                 baseUrl: String,
                 headersProvider: RequestHeadersProviderProtocol?,
                 authorizationProvider: AuthorizationProviderProtocol?,
+                statusCodeProvider: StatusCodeProviderProtocol? = nil,
                 configuration: URLSessionConfiguration = URLSessionConfiguration.default,
                 logRequest: @escaping RequestServiceLogRequest = { request in return request }) {
         self.baseUrl = baseUrl
@@ -25,6 +27,7 @@ public class RequestService: RequestServiceProtocol {
         self.queue = queue
         self.headersProvider = headersProvider
         self.authorizationProvider = authorizationProvider
+        self.statusCodeProvider = statusCodeProvider
         self.logRequest = logRequest
         self.multipartConfigurator = MultipartConfigurator()
     }
@@ -45,6 +48,7 @@ public class RequestService: RequestServiceProtocol {
             .validate()
             .validate(contentType: ["application/json"]))
             .responseJSON(queue: self.queue) { [weak self] response in
+                self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.keyDecodingStrategy = codingStrategy
                 switch response.result {
@@ -143,6 +147,7 @@ public class RequestService: RequestServiceProtocol {
             headers: getHeadersWithAuthTokenIfNeeded(request: request))
             .validate())
             .responseData(queue: self.queue) { [weak self] response in
+                self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
                 switch response.result {
                 case .success:
                     queue.async {
@@ -186,6 +191,7 @@ public class RequestService: RequestServiceProtocol {
             headers: getHeadersWithAuthTokenIfNeeded(request: request))
             .validate())
             .responseData(queue: self.queue) { [weak self] response in
+                self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
                 switch response.result {
                 case .success:
                     queue.async {
@@ -240,6 +246,7 @@ public class RequestService: RequestServiceProtocol {
                                         upload.validate()
                                             .responseJSON(queue: self.queue,
                                                           completionHandler: { [weak self] (response) in
+                                                            self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
                                                             let jsonDecoder = JSONDecoder()
                                                             jsonDecoder.keyDecodingStrategy = codingStrategy
                                                             switch response.result {
@@ -325,6 +332,7 @@ public class RequestService: RequestServiceProtocol {
             case .success(let upload, _, _ ):
                 upload.validate()
                     .responseJSON { [weak self] response in
+                        self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
                         let jsonDecoder = JSONDecoder()
                         jsonDecoder.keyDecodingStrategy = codingStrategy
                         switch response.result {
