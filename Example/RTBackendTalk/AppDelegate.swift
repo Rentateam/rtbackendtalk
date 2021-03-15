@@ -11,6 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate struct BackgroundPrinter: Printer {
         public init() {}
 
+        
         public func print(_ string: String, phase: Phase) {
             DispatchQueue.global(qos: .utility).async {
                 Swift.print(string)
