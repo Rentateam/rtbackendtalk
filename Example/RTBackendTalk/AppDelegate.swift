@@ -144,11 +144,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: RequestHeadersProviderProtocol {
-    func getHeaders() -> HTTPHeaders? {
-        var headers = HTTPHeaders()
-        headers["SomeOwnHeader"] = "Value"
-        return headers
+    func getHeaders() -> [String : String]? {
+        return ["SomeOwnHeader":"Value"]
     }
+    
+//    func getHeaders() -> HTTPHeaders? {
+//        var headers = HTTPHeaders()
+//        headers["SomeOwnHeader"] = "Value"
+//        return headers
+//    }
 }
 
 extension AppDelegate: AuthorizationProviderProtocol {

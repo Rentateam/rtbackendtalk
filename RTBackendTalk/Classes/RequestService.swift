@@ -5,7 +5,7 @@ import Alamofire
 public typealias RequestServiceLogRequest = (_ request: DataRequest) -> DataRequest
 
 public class RequestService: RequestServiceProtocol {
-    private let sessionManager: SessionManager
+    private let sessionManager: Session
     private let queue: DispatchQueue
     public var baseUrl: String
     private let headersProvider: RequestHeadersProviderProtocol?
@@ -25,7 +25,7 @@ public class RequestService: RequestServiceProtocol {
                 configuration: URLSessionConfiguration = URLSessionConfiguration.default,
                 logRequest: @escaping RequestServiceLogRequest = { request in return request }) {
         self.baseUrl = baseUrl
-        self.sessionManager = Alamofire.SessionManager(configuration: configuration)
+        self.sessionManager = Alamofire.Session(configuration: configuration)
         self.queue = queue
         self.headersProvider = headersProvider
         self.authorizationProvider = authorizationProvider
