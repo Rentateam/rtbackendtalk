@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 import Alamofire
 
-public typealias RequestServiceLogRequest = (_ request: DataRequest) -> DataRequest
+//public typealias RequestServiceLogRequest = (_ request: DataRequest) -> DataRequest
 
 public class RequestService: RequestServiceProtocol {
     private let sessionManager: Session
@@ -10,7 +10,7 @@ public class RequestService: RequestServiceProtocol {
     public var baseUrl: String
     private let headersProvider: RequestHeadersProviderProtocol?
     private let authorizationProvider: AuthorizationProviderProtocol?
-    private let logRequest: RequestServiceLogRequest
+//    private let logRequest: RequestServiceLogRequest
     private let statusCodeProvider: StatusCodeProviderProtocol?
     private let multipartConfigurator: MultipartConfigurator
     public var numberOfTokenRefreshAttempts = RequestService.maxNumberOfRefreshAttempts
@@ -22,15 +22,15 @@ public class RequestService: RequestServiceProtocol {
                 headersProvider: RequestHeadersProviderProtocol?,
                 authorizationProvider: AuthorizationProviderProtocol?,
                 statusCodeProvider: StatusCodeProviderProtocol? = nil,
-                configuration: URLSessionConfiguration = URLSessionConfiguration.default,
-                logRequest: @escaping RequestServiceLogRequest = { request in return request }) {
+                configuration: URLSessionConfiguration = URLSessionConfiguration.default) {
+//                logRequest: @escaping RequestServiceLogRequest = { request in return request }) {
         self.baseUrl = baseUrl
         self.sessionManager = Alamofire.Session(configuration: configuration)
         self.queue = queue
         self.headersProvider = headersProvider
         self.authorizationProvider = authorizationProvider
         self.statusCodeProvider = statusCodeProvider
-        self.logRequest = logRequest
+//        self.logRequest = logRequest
         self.multipartConfigurator = MultipartConfigurator()
     }
 
@@ -41,14 +41,14 @@ public class RequestService: RequestServiceProtocol {
                                      queue: DispatchQueue = DispatchQueue.main,
                                      codingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) where Foo: Decodable {
         
-        self.logRequest(self.sessionManager.request(
+        self.sessionManager.request(
             self.getRequestUrl(request),
             method: request.getMethod(),
             parameters: request.getParams(),
             encoding: JSONEncoding.default,
             headers: getHeadersWithAuthTokenIfNeeded(request: request))
             .validate()
-            .validate(contentType: ["application/json"]))
+            .validate(contentType: ["application/json"])
             .responseJSON(queue: self.queue) { [weak self] response in
                 self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
                 let jsonDecoder = JSONDecoder()
@@ -137,13 +137,13 @@ public class RequestService: RequestServiceProtocol {
                                 queue: DispatchQueue = DispatchQueue.main) {
         
         
-        self.logRequest(self.sessionManager.request(
+        self.sessionManager.request(
             self.getRequestUrl(request),
             method: request.getMethod(),
             parameters: request.getParams(),
             encoding: URLEncoding.default,
             headers: getHeadersWithAuthTokenIfNeeded(request: request))
-            .validate())
+            .validate()
             .responseData(queue: self.queue) { [weak self] response in
                 self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
                 switch response.result {
@@ -177,13 +177,13 @@ public class RequestService: RequestServiceProtocol {
                                 onError: @escaping (_ error: Error?, _ statusCode: Int?) -> Void,
                                 queue: DispatchQueue = DispatchQueue.main) {
                 
-        self.logRequest(self.sessionManager.request(
+        self.sessionManager.request(
             self.getRequestUrl(request),
             method: request.getMethod(),
             parameters: request.getParams(),
             encoding: JSONEncoding.default,
             headers: getHeadersWithAuthTokenIfNeeded(request: request))
-            .validate())
+            .validate()
             .responseData(queue: self.queue) { [weak self] response in
                 self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
                 switch response.result {
@@ -211,7 +211,7 @@ public class RequestService: RequestServiceProtocol {
                 }
         }
     }
-
+    
     public func makeMultipartDataRequest<Foo>(request: RequestMultipartProtocol,
                                               responseType: Foo.Type,
                                               onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
@@ -222,79 +222,65 @@ public class RequestService: RequestServiceProtocol {
         
         var headers = getHeadersWithAuthTokenIfNeeded(request: request)
         headers["Content-Type"] = "multipart/form-data"
-
-        self.sessionManager.upload(multipartFormData: { [weak self] (multipartFormData) in
+        
+        let multipartFormData: (MultipartFormData) -> Void = { [weak self] (multipartFormData) in
             self?.multipartConfigurator.configure(data: multipartFormData, request: request)
-            },
-                                   usingThreshold: UInt64.init(),
+        }
+        
+        self.sessionManager.upload(multipartFormData: multipartFormData,
                                    to: self.getRequestUrl(request),
+                                   usingThreshold: UInt64.init(),
                                    method: request.getMethod(),
-                                   headers: headers,
-                                   encodingCompletion: { (encodingResult) in
-                                    switch encodingResult {
-                                    case .success(let upload, _, _ ):
-                                        upload.validate()
-                                            .responseJSON(queue: self.queue,
-                                                          completionHandler: { [weak self] (response) in
-                                                            self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
-                                                            let jsonDecoder = JSONDecoder()
-                                                            jsonDecoder.keyDecodingStrategy = codingStrategy
-                                                            switch response.result {
-                                                            case .success:
-                                                                if let data = response.data {
-                                                                    if response.result.isSuccess {
-                                                                        do {
-                                                                            let foo = try jsonDecoder.decode(Foo.self, from: data)
-                                                                            queue.async {
-                                                                                onComplete(foo, response.response?.statusCode)
-                                                                            }
-                                                                        } catch let error {
-                                                                            queue.async {
-                                                                                onError(error, response.response?.statusCode, nil)
-                                                                            }
-                                                                        }
-                                                                    } else {
-                                                                        queue.async {
-                                                                            onError(response.error, response.response?.statusCode, nil)
-                                                                        }
-                                                                    }
-                                                                }
-                                                            case .failure(let error):
-                                                                if self?.authorizationProvider?.isTokenExpired(response: response.response) ?? false {
-                                                                    self?.refreshToken { [weak self] isSuccess in
-                                                                        if isSuccess {
-                                                                            //Request again after token refresh
-                                                                            self?.makeMultipartDataRequest(request: request,
-                                                                                                           responseType: responseType,
-                                                                                                           onComplete: onComplete,
-                                                                                                           onError: onError,
-                                                                                                           onEncodingError: onEncodingError,
-                                                                                                           queue: queue,
-                                                                                                           codingStrategy: codingStrategy)
-                                                                        } else {
-                                                                            queue.async {
-                                                                                onError(response.error, response.response?.statusCode, nil)
-                                                                            }
-                                                                        }
-                                                                    }
-                                                            } else {
-                                                                var json: Foo?
-                                                                if let jsonData = response.data {
-                                                                    json = try? jsonDecoder.decode(responseType, from: jsonData)
-                                                                }
-                                                                
-                                                                queue.async {
-                                                                    onError(error, response.response?.statusCode, json)
-                                                                }
-                                                            }
-                                                                    }
-                                                    })
-                                            case .failure(let encodingError):
-                                                queue.async {
-                                                    onEncodingError(encodingError)
-                                                }
-                                            }
-        })
+                                   headers: headers)
+            .validate()
+            .responseJSON(queue: self.queue) { [weak self] (response) in
+                self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = codingStrategy
+                switch response.result {
+                case .success:
+                    if let data = response.data {
+                        do {
+                            let foo = try jsonDecoder.decode(Foo.self, from: data)
+                            queue.async {
+                                onComplete(foo, response.response?.statusCode)
+                            }
+                        } catch let error {
+                            queue.async {
+                                onError(error, response.response?.statusCode, nil)
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    if self?.authorizationProvider?.isTokenExpired(response: response.response) ?? false {
+                        self?.refreshToken { [weak self] isSuccess in
+                            if isSuccess {
+                                //Request again after token refresh
+                                self?.makeMultipartDataRequest(request: request,
+                                                               responseType: responseType,
+                                                               onComplete: onComplete,
+                                                               onError: onError,
+                                                               onEncodingError: onEncodingError,
+                                                               queue: queue,
+                                                               codingStrategy: codingStrategy)
+                            } else {
+                                queue.async {
+                                    onError(response.error, response.response?.statusCode, nil)
+                                }
+                            }
+                        }
+                    } else {
+                        var json: Foo?
+                        if let jsonData = response.data {
+                            json = try? jsonDecoder.decode(responseType, from: jsonData)
+                        }
+                        
+                        queue.async {
+                            onError(error, response.response?.statusCode, json)
+                        }
+                    }
+                }
+            }
     }
     
     public func makeFileDataRequest<Foo: Decodable>(request: RequestProtocol & BucketProtocol,
@@ -319,80 +305,61 @@ public class RequestService: RequestServiceProtocol {
             })
         }
 
-        let encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void) = { (encodingResult) in
-            switch encodingResult {
-            case .success(let upload, _, _ ):
-                upload.validate()
-                    .responseJSON { [weak self] response in
-                        self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
-                        let jsonDecoder = JSONDecoder()
-                        jsonDecoder.keyDecodingStrategy = codingStrategy
-                        switch response.result {
-                        case .success:
-                            if let data = response.data {
-                                if response.result.isSuccess {
-                                    do {
-                                        let foo = try jsonDecoder.decode(Foo.self, from: data)
-                                        queue.async {
-                                            onComplete(foo, nil)
-                                        }
-                                    } catch let error {
-                                        queue.async {
-                                            onError(error, response.response?.statusCode, nil)
-                                        }
-                                    }
-                                } else {
-                                    queue.async {
-                                        onError(response.error, response.response?.statusCode, nil)
-                                    }
-                                }
+        self.sessionManager.upload(multipartFormData: multipartFormData,
+                                   to: self.getRequestUrl(request),
+                                   usingThreshold: UInt64.init(),
+                                   method: request.getMethod(),
+                                   headers: headers)
+            .validate()
+            .responseJSON { [weak self] response in
+                self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = codingStrategy
+                switch response.result {
+                case .success:
+                    if let data = response.data {
+                        do {
+                            let foo = try jsonDecoder.decode(Foo.self, from: data)
+                            queue.async {
+                                onComplete(foo, nil)
                             }
-                        case .failure(let error):
-                            if self?.authorizationProvider?.isTokenExpired(response: response.response) ?? false {
-                                self?.refreshToken { [weak self] isSuccess in
-                                    if isSuccess {
-                                        //Request again after token refresh
-                                        self?.makeFileDataRequest(request: request,
-                                                                  responseType: responseType,
-                                                                  onComplete: onComplete,
-                                                                  onError: onError,
-                                                                  onEncodingError: onEncodingError,
-                                                                  queue: queue,
-                                                                  codingStrategy: codingStrategy)
-                                    } else {
-                                        queue.async {
-                                            onError(response.error, response.response?.statusCode, nil)
-                                        }
-                                    }
-                                }
-                            } else {
-                                var json: Foo?
-                                if let jsonData = response.data {
-                                    json = try? jsonDecoder.decode(responseType, from: jsonData)
-                                }
-                                
-                                queue.async {
-                                    onError(error, response.response?.statusCode, json)
-                                }
+                        } catch let error {
+                            queue.async {
+                                onError(error, response.response?.statusCode, nil)
                             }
-                            
                         }
-                }
-
-            case .failure(let encodingError):
-                queue.async {
-                    onEncodingError(encodingError)
+                    }
+                case .failure(let error):
+                    if self?.authorizationProvider?.isTokenExpired(response: response.response) ?? false {
+                        self?.refreshToken { [weak self] isSuccess in
+                            if isSuccess {
+                                //Request again after token refresh
+                                self?.makeFileDataRequest(request: request,
+                                                          responseType: responseType,
+                                                          onComplete: onComplete,
+                                                          onError: onError,
+                                                          onEncodingError: onEncodingError,
+                                                          queue: queue,
+                                                          codingStrategy: codingStrategy)
+                            } else {
+                                queue.async {
+                                    onError(response.error, response.response?.statusCode, nil)
+                                }
+                            }
+                        }
+                    } else {
+                        var json: Foo?
+                        if let jsonData = response.data {
+                            json = try? jsonDecoder.decode(responseType, from: jsonData)
+                        }
+                        
+                        queue.async {
+                            onError(error, response.response?.statusCode, json)
+                        }
+                    }
+                    
                 }
             }
-
-        }
-
-        self.sessionManager.upload(multipartFormData: multipartFormData,
-                                   usingThreshold: UInt64.init(),
-                                   to: self.getRequestUrl(request),
-                                   method: request.getMethod(),
-                                   headers: headers,
-                                   encodingCompletion: encodingCompletion)
     }
     
     private func refreshToken(completion: @escaping (Bool) -> Void) {

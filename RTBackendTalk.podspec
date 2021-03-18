@@ -32,5 +32,5 @@ This library offers engine for creating network requests and processing them.
 
   s.source_files = 'RTBackendTalk/Classes/**/*'
   
-  s.dependency 'Alamofire', '~> 5.2'
+  s.dependency 'Alamofire', '~> 5.4.1'
 end
