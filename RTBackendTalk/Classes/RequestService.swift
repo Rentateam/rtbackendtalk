@@ -2,15 +2,12 @@ import Foundation
 import UIKit
 import Alamofire
 
-//public typealias RequestServiceLogRequest = (_ request: DataRequest) -> DataRequest
-
 public class RequestService: RequestServiceProtocol {
     private let sessionManager: Session
     private let queue: DispatchQueue
     public var baseUrl: String
     private let headersProvider: RequestHeadersProviderProtocol?
     private let authorizationProvider: AuthorizationProviderProtocol?
-//    private let logRequest: RequestServiceLogRequest
     private let statusCodeProvider: StatusCodeProviderProtocol?
     private let multipartConfigurator: MultipartConfigurator
     public var numberOfTokenRefreshAttempts = RequestService.maxNumberOfRefreshAttempts
@@ -23,14 +20,12 @@ public class RequestService: RequestServiceProtocol {
                 authorizationProvider: AuthorizationProviderProtocol?,
                 statusCodeProvider: StatusCodeProviderProtocol? = nil,
                 configuration: URLSessionConfiguration = URLSessionConfiguration.default) {
-//                logRequest: @escaping RequestServiceLogRequest = { request in return request }) {
         self.baseUrl = baseUrl
         self.sessionManager = Alamofire.Session(configuration: configuration)
         self.queue = queue
         self.headersProvider = headersProvider
         self.authorizationProvider = authorizationProvider
         self.statusCodeProvider = statusCodeProvider
-//        self.logRequest = logRequest
         self.multipartConfigurator = MultipartConfigurator()
     }
 
