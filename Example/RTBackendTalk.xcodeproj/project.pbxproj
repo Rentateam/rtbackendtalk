@@ -325,13 +325,11 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RTBackendTalk_Example/Pods-RTBackendTalk_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireActivityLogger/AlamofireActivityLogger.framework",
 				"${BUILT_PRODUCTS_DIR}/RTBackendTalk/RTBackendTalk.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireActivityLogger.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RTBackendTalk.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
