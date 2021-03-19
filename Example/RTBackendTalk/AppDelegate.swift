@@ -1,23 +1,11 @@
 import UIKit
 import RTBackendTalk
 import Alamofire
-import AlamofireActivityLogger
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-    fileprivate struct BackgroundPrinter: Printer {
-        public init() {}
-
-        
-        public func print(_ string: String, phase: Phase) {
-            DispatchQueue.global(qos: .utility).async {
-                Swift.print(string)
-            }
-        }
-    }
 
     struct Post: Codable {
         let userId: Int
@@ -39,11 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                             baseUrl: "https://jsonplaceholder.typicode.com",
                                             headersProvider: self,
                                             authorizationProvider: self,
-                                            configuration: configuration) { request in
-                                                request.log(level: .info,
-                                                            options: [.onlyDebug, .jsonPrettyPrint, .includeSeparator],
-                                                            printer: BackgroundPrinter())
-        }
+                                            configuration: configuration)
+        
         requestService.makeJsonRequest(request: TestRequest(),
                                        responseType: [Post].self,
                                        onComplete: { response, _ in
