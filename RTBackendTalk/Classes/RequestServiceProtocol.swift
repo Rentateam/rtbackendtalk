@@ -8,6 +8,14 @@ public protocol RequestServiceProtocol: class {
                               onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
                               queue: DispatchQueue,
                               codingStrategy: JSONDecoder.KeyDecodingStrategy) where Foo: Decodable
+    
+    func makeJsonRequest<Foo, Bar: RequestProtocolEncodable>(request: Bar,
+                                                             responseType: Foo.Type,
+                                                             onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
+                                                             onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
+                                                             queue: DispatchQueue,
+                                                             codingStrategy: JSONDecoder.KeyDecodingStrategy) where Foo: Decodable
+    
     func makeJsonRequests<RequestId, ResponseType: Decodable>(
         requestInfo: [RequestId: MultipleRequestInfo<ResponseType>],
         onComplete: @escaping (_ successResults: [RequestId: MultipleResponseInfo<ResponseType>], _ errorResults: [RequestId: MultipleResponseErrorInfo<ResponseType>]) -> Void,
