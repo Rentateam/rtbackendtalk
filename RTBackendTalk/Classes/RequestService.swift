@@ -450,10 +450,30 @@ public class RequestService: RequestServiceProtocol {
         }
     }
     
+    private func getRequestUrl<T: RequestProtocolEncodable>(_ request: T) -> String {
+        if request.isAbsoluteUrl() {
+            return request.getUrl()
+        } else {
+            return self.baseUrl + request.getUrl()
+        }
+    }
+    
     private func getHeadersWithAuthTokenIfNeeded(request: RequestProtocol) -> HTTPHeaders {
+        let isAuthorizationRequired = request.isAuthorizationRequired()
+        let headers = getHeadersWithAuthTokenIfNeeded(isAuthorizationRequired: isAuthorizationRequired)
+        return headers
+    }
+    
+    private func getHeadersWithAuthTokenIfNeeded<T: RequestProtocolEncodable>(request: T) -> HTTPHeaders {
+        let isAuthorizationRequired = request.isAuthorizationRequired()
+        let headers = getHeadersWithAuthTokenIfNeeded(isAuthorizationRequired: isAuthorizationRequired)
+        return headers
+    }
+    
+    private func getHeadersWithAuthTokenIfNeeded(isAuthorizationRequired: Bool) -> HTTPHeaders {
         var headers = self.headersProvider?.getHeaders() ?? HTTPHeaders()
         
-        guard request.isAuthorizationRequired() else {
+        guard isAuthorizationRequired else {
             return headers
         }
         
