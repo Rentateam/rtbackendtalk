@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol BucketProtocol: class {
+public protocol BucketProtocol: AnyObject {
     func getFileName() -> String
     func getBucketName() -> String
     func getXSecretSalt() -> String
