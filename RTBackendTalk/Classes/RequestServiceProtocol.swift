@@ -9,7 +9,7 @@ public protocol RequestServiceProtocol: AnyObject {
                               queue: DispatchQueue,
                               codingStrategy: JSONDecoder.KeyDecodingStrategy)
     
-    func makeJsonRequest<Foo: Decodable, Bar: RequestProtocolEncodable>(request: Bar,
+    func makeJsonRequestEncodable<Foo: Decodable, Bar: RequestProtocolEncodable>(request: Bar,
                                                              responseType: Foo.Type,
                                                              onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
                                                              onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,

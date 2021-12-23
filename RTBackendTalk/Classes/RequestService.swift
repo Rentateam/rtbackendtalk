@@ -97,7 +97,7 @@ public class RequestService: RequestServiceProtocol {
         }
     }
     
-    public func makeJsonRequest<Foo: RequestProtocolEncodable, Bar: Decodable>(request: Foo,
+    public func makeJsonRequestEncodable<Foo: RequestProtocolEncodable, Bar: Decodable>(request: Foo,
                                                                                responseType: Bar.Type,
                                                                                onComplete: @escaping (_ response: Bar, _ statusCode: Int?) -> Void,
                                                                                onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Bar?) -> Void,
@@ -138,7 +138,7 @@ public class RequestService: RequestServiceProtocol {
                         self?.refreshToken { [weak self] isSuccess in
                             if isSuccess {
                                 //Request again after token refresh
-                                self?.makeJsonRequest(request: request,
+                                self?.makeJsonRequestEncodable(request: request,
                                                       responseType: responseType,
                                                       onComplete: onComplete,
                                                       onError: onError,
