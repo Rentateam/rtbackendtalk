@@ -1,13 +1,21 @@
 import Foundation
 import Alamofire
 
-public protocol RequestServiceProtocol: class {
-    func makeJsonRequest<Foo>(request: RequestProtocol,
+public protocol RequestServiceProtocol: AnyObject {
+    func makeJsonRequest<Foo: Decodable>(request: RequestProtocol,
                               responseType: Foo.Type,
                               onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
                               onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
                               queue: DispatchQueue,
-                              codingStrategy: JSONDecoder.KeyDecodingStrategy) where Foo: Decodable
+                              codingStrategy: JSONDecoder.KeyDecodingStrategy)
+    
+    func makeJsonRequestEncodable<Foo: Decodable, Bar: RequestProtocolEncodable>(request: Bar,
+                                                             responseType: Foo.Type,
+                                                             onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
+                                                             onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
+                                                             queue: DispatchQueue,
+                                                             codingStrategy: JSONDecoder.KeyDecodingStrategy)
+    
     func makeJsonRequests<RequestId, ResponseType: Decodable>(
         requestInfo: [RequestId: MultipleRequestInfo<ResponseType>],
         onComplete: @escaping (_ successResults: [RequestId: MultipleResponseInfo<ResponseType>], _ errorResults: [RequestId: MultipleResponseErrorInfo<ResponseType>]) -> Void,

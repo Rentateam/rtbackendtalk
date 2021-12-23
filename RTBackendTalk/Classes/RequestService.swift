@@ -97,6 +97,73 @@ public class RequestService: RequestServiceProtocol {
         }
     }
     
+    public func makeJsonRequestEncodable<Foo: RequestProtocolEncodable, Bar: Decodable>(request: Foo,
+                                                                               responseType: Bar.Type,
+                                                                               onComplete: @escaping (_ response: Bar, _ statusCode: Int?) -> Void,
+                                                                               onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Bar?) -> Void,
+                                                                               queue: DispatchQueue = DispatchQueue.main,
+                                                                               codingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) {
+        self.sessionManager.request(
+            self.getRequestUrl(request),
+            method: request.getMethod(),
+            parameters: request.getParams(),
+            encoder: JSONParameterEncoder.default,
+            headers: getHeadersWithAuthTokenIfNeeded(request: request))
+            .validate()
+            .validate(contentType: ["application/json"])
+            .responseJSON(queue: self.queue) { [weak self] response in
+                self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = codingStrategy
+                switch response.result {
+                case .success:
+                    if let jsonData = response.data {
+                        do {
+                           let json = try jsonDecoder.decode(responseType, from: jsonData)
+                            queue.async {
+                                onComplete(json, response.response?.statusCode)
+                            }
+                        } catch let error {
+                            queue.async {
+                                onError(error, response.response?.statusCode, nil)
+                            }
+                        }
+                    } else {
+                        queue.async {
+                            onError(response.error, response.response?.statusCode, nil)
+                        }
+                    }
+                case .failure(let error):
+                    if self?.authorizationProvider?.isTokenExpired(response: response.response) ?? false {
+                        self?.refreshToken { [weak self] isSuccess in
+                            if isSuccess {
+                                //Request again after token refresh
+                                self?.makeJsonRequestEncodable(request: request,
+                                                      responseType: responseType,
+                                                      onComplete: onComplete,
+                                                      onError: onError,
+                                                      queue: queue,
+                                                      codingStrategy: codingStrategy)
+                            } else {
+                                queue.async {
+                                    onError(response.error, response.response?.statusCode, nil)
+                                }
+                            }
+                        }
+                    } else {
+                        var json: Bar?
+                        if let jsonData = response.data {
+                            json = try? jsonDecoder.decode(responseType, from: jsonData)
+                        }
+
+                        queue.async {
+                            onError(error, response.response?.statusCode, json)
+                        }
+                    }
+                }
+        }
+    }
+    
     public func makeJsonRequests<RequestId, ResponseType: Decodable>(requestInfo: [RequestId: MultipleRequestInfo<ResponseType>],
                                                                      onComplete: @escaping (_ successResults: [RequestId: MultipleResponseInfo<ResponseType>],
         _ errorResults: [RequestId: MultipleResponseErrorInfo<ResponseType>]) -> Void,
@@ -383,10 +450,30 @@ public class RequestService: RequestServiceProtocol {
         }
     }
     
+    private func getRequestUrl<T: RequestProtocolEncodable>(_ request: T) -> String {
+        if request.isAbsoluteUrl() {
+            return request.getUrl()
+        } else {
+            return self.baseUrl + request.getUrl()
+        }
+    }
+    
     private func getHeadersWithAuthTokenIfNeeded(request: RequestProtocol) -> HTTPHeaders {
+        let isAuthorizationRequired = request.isAuthorizationRequired()
+        let headers = getHeadersWithAuthTokenIfNeeded(isAuthorizationRequired: isAuthorizationRequired)
+        return headers
+    }
+    
+    private func getHeadersWithAuthTokenIfNeeded<T: RequestProtocolEncodable>(request: T) -> HTTPHeaders {
+        let isAuthorizationRequired = request.isAuthorizationRequired()
+        let headers = getHeadersWithAuthTokenIfNeeded(isAuthorizationRequired: isAuthorizationRequired)
+        return headers
+    }
+    
+    private func getHeadersWithAuthTokenIfNeeded(isAuthorizationRequired: Bool) -> HTTPHeaders {
         var headers = self.headersProvider?.getHeaders() ?? HTTPHeaders()
         
-        guard request.isAuthorizationRequired() else {
+        guard isAuthorizationRequired else {
             return headers
         }
         
