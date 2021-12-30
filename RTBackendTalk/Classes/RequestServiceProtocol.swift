@@ -1,33 +1,38 @@
 import Foundation
 import Alamofire
 
-public protocol RequestServiceProtocol: class {
-    func makeJsonRequest<Foo>(request: RequestProtocol,
+public protocol RequestServiceProtocol: AnyObject {
+    func makeJsonRequest<Foo, Bar: RequestProtocol>(request: Bar,
                               responseType: Foo.Type,
                               onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
                               onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
                               queue: DispatchQueue,
                               codingStrategy: JSONDecoder.KeyDecodingStrategy) where Foo: Decodable
-    func makeJsonRequests<RequestId, ResponseType: Decodable>(
-        requestInfo: [RequestId: MultipleRequestInfo<ResponseType>],
+    
+    func makeJsonRequests<RequestId, ResponseType: Decodable, Request: RequestProtocol>(
+        requestInfo: [RequestId: MultipleRequestInfo<ResponseType, Request>],
         onComplete: @escaping (_ successResults: [RequestId: MultipleResponseInfo<ResponseType>], _ errorResults: [RequestId: MultipleResponseErrorInfo<ResponseType>]) -> Void,
         queue: DispatchQueue) where RequestId: Hashable, ResponseType: Decodable
-    func makeDataRequest(request: RequestProtocol,
+    
+    func makeDataRequest<Foo: RequestProtocol>(request: Foo,
                          onComplete: @escaping (_ data: Data?, _ statusCode: Int?) -> Void,
                          onError: @escaping (_ error: Error?, _ statusCode: Int?, _ data: Data?) -> Void,
                          queue: DispatchQueue)
-    func makeVoidRequest(request: RequestProtocol,
+    
+    func makeVoidRequest<Foo: RequestProtocol>(request: Foo,
                          onComplete: @escaping (_ statusCode: Int?) -> Void,
                          onError: @escaping (_ error: Error?, _ statusCode: Int?) -> Void,
                          queue: DispatchQueue)
-    func makeMultipartDataRequest<Foo>(request: RequestMultipartProtocol,
+    
+    func makeMultipartDataRequest<Foo, Bar: RequestMultipartProtocol>(request: Bar,
                                        responseType: Foo.Type,
                                        onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
                                        onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
                                        onEncodingError: @escaping (_ error: Error?) -> Void,
                                        queue: DispatchQueue,
                                        codingStrategy: JSONDecoder.KeyDecodingStrategy) where Foo: Decodable
-    func makeFileDataRequest<Foo: Decodable>(request: RequestProtocol & BucketProtocol,
+    
+    func makeFileDataRequest<Foo: Decodable, Bar: RequestProtocol & BucketProtocol>(request: Bar,
                                              responseType: Foo.Type,
                                              onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
                                              onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
@@ -37,7 +42,7 @@ public protocol RequestServiceProtocol: class {
 }
 
 public extension RequestServiceProtocol {
-    func makeJsonRequest<Foo>(request: RequestProtocol,
+    func makeJsonRequest<Foo, Bar: RequestProtocol>(request: Bar,
                               responseType: Foo.Type,
                               onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
                               onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void) where Foo: Decodable {
@@ -49,15 +54,15 @@ public extension RequestServiceProtocol {
                         codingStrategy: .useDefaultKeys)
     }
 
-    func makeJsonRequests<RequestId, ResponseType: Decodable>(
-        requestInfo: [RequestId: MultipleRequestInfo<ResponseType>],
+    func makeJsonRequests<RequestId, ResponseType: Decodable, Request: RequestProtocol>(
+        requestInfo: [RequestId: MultipleRequestInfo<ResponseType, Request>],
         onComplete: @escaping (_ successResults: [RequestId: MultipleResponseInfo<ResponseType>], _ errorResults: [RequestId: MultipleResponseErrorInfo<ResponseType>]) -> Void) where RequestId: Hashable, ResponseType: Decodable {
         makeJsonRequests(requestInfo: requestInfo,
                          onComplete: onComplete,
                          queue: DispatchQueue.main)
     }
 
-    func makeFileDataRequest<Foo: Decodable>(request: RequestProtocol & BucketProtocol,
+    func makeFileDataRequest<Foo: Decodable, Bar: RequestProtocol & BucketProtocol>(request: Bar,
                                              responseType: Foo.Type,
                                              onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
                                              onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,

@@ -3,6 +3,7 @@ import RTBackendTalk
 import Alamofire
 
 class TestMultipartRequest: RequestMultipartProtocol {
+    typealias T = Parameters
     
     private let photoList: [UIImage]
 

@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                             authorizationProvider: self,
                                             configuration: configuration)
         
-        requestService.makeJsonRequest(request: TestRequest(),
+        requestService.makeJsonRequest(request: TestRequest<String>(),
                                        responseType: [Post].self,
                                        onComplete: { response, _ in
                                         print("TestRequest completed, \(response)")
@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         },
                                        queue: DispatchQueue.main)
 
-        requestService.makeDataRequest(request: TestDataRequest(),
+        requestService.makeDataRequest(request: TestDataRequest<String>(),
                                        onComplete: { _, _ in
                                         print("TestDataRequest completed")
         },
@@ -63,8 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                      queue: DispatchQueue.main)
         
         let requestInfo = [
-            1: MultipleRequestInfo<[Post]>(request: TestRequest()),
-            2: MultipleRequestInfo<[Post]>(request: Test2Request())
+            1: MultipleRequestInfo<[Post], String>(request: TestRequest<String>()),
+            2: MultipleRequestInfo<[Post], String>(request: Test2Request<String>())
         ]
         requestService.makeJsonRequests(requestInfo: requestInfo,
                                         onComplete: { responses, errors in
@@ -89,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         },
                                         queue: DispatchQueue.main)
         
-        requestService.makeFileDataRequest(request: TestBucketRequest(),
+        requestService.makeFileDataRequest(request: TestBucketRequest<String>(),
                                            responseType: [Post].self,
                                            onComplete: { _, _ in
                                             print("Bucket request completed")
