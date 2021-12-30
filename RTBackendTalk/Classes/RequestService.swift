@@ -29,19 +29,29 @@ public class RequestService: RequestServiceProtocol {
         self.multipartConfigurator = MultipartConfigurator()
     }
 
-    public func makeJsonRequest<Foo>(request: RequestProtocol,
+    public func makeJsonRequest<Foo, Bar: RequestProtocol>(request: Bar,
                                      responseType: Foo.Type,
                                      onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
                                      onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
                                      queue: DispatchQueue = DispatchQueue.main,
                                      codingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) where Foo: Decodable {
         
-        self.sessionManager.request(
-            self.getRequestUrl(request),
-            method: request.getMethod(),
-            parameters: request.getParams(),
-            encoding: JSONEncoding.default,
-            headers: getHeadersWithAuthTokenIfNeeded(request: request))
+        
+        
+        
+        
+        
+//        self.sessionManager.request(
+//            self.getRequestUrl(request),
+//            method: request.getMethod(),
+//            parameters: request.getParams(),
+//            encoding: JSONEncoding.default,
+//            headers: getHeadersWithAuthTokenIfNeeded(request: request))
+        self.sessionManager.request(self.getRequestUrl(request),
+                                    method: request.getMethod(),
+                                    parameters: request.getParams(),
+                                    encoder: JSONParameterEncoder.default,
+                                    headers: getHeadersWithAuthTokenIfNeeded(request: request))
             .validate()
             .validate(contentType: ["application/json"])
             .responseJSON(queue: self.queue) { [weak self] response in
@@ -97,7 +107,7 @@ public class RequestService: RequestServiceProtocol {
         }
     }
     
-    public func makeJsonRequests<RequestId, ResponseType: Decodable>(requestInfo: [RequestId: MultipleRequestInfo<ResponseType>],
+    public func makeJsonRequests<RequestId, ResponseType: Decodable, Request: RequestProtocol>(requestInfo: [RequestId: MultipleRequestInfo<ResponseType, Request>],
                                                                      onComplete: @escaping (_ successResults: [RequestId: MultipleResponseInfo<ResponseType>],
         _ errorResults: [RequestId: MultipleResponseErrorInfo<ResponseType>]) -> Void,
         queue: DispatchQueue = DispatchQueue.main) where RequestId: Hashable,
@@ -126,16 +136,25 @@ public class RequestService: RequestServiceProtocol {
         }
     }
 
-    public func makeDataRequest(request: RequestProtocol,
+    public func makeDataRequest<Foo: RequestProtocol>(request: Foo,
                                 onComplete: @escaping (_ data: Data?, _ statusCode: Int?) -> Void,
                                 onError: @escaping (_ error: Error?, _ statusCode: Int?, _ data: Data?) -> Void,
                                 queue: DispatchQueue = DispatchQueue.main) {
+
+        guard let encodableParameters = request.getParams() else { return }
         
+        var parameters: Parameters?
+        do {
+            parameters = try encodableParameters.asParameters()
+        } catch let error {
+            // TODO: проверить localizedDescription
+            print(#function, error.localizedDescription)
+        }
         
         self.sessionManager.request(
             self.getRequestUrl(request),
             method: request.getMethod(),
-            parameters: request.getParams(),
+            parameters: parameters,
             encoding: URLEncoding.default,
             headers: getHeadersWithAuthTokenIfNeeded(request: request))
             .validate()
@@ -167,18 +186,17 @@ public class RequestService: RequestServiceProtocol {
             }
     }
 
-    public func makeVoidRequest(request: RequestProtocol,
+    public func makeVoidRequest<Foo: RequestProtocol>(request: Foo,
                                 onComplete: @escaping (_ statusCode: Int?) -> Void,
                                 onError: @escaping (_ error: Error?, _ statusCode: Int?) -> Void,
                                 queue: DispatchQueue = DispatchQueue.main) {
-                
-        self.sessionManager.request(
-            self.getRequestUrl(request),
-            method: request.getMethod(),
-            parameters: request.getParams(),
-            encoding: JSONEncoding.default,
-            headers: getHeadersWithAuthTokenIfNeeded(request: request))
-            .validate()
+        
+        self.sessionManager.request(self.getRequestUrl(request),
+                                    method: request.getMethod(),
+                                    parameters: request.getParams(),
+                                    encoder: JSONParameterEncoder.default,
+                                    headers: getHeadersWithAuthTokenIfNeeded(request: request))
+             .validate()
             .responseData(queue: self.queue) { [weak self] response in
                 self?.statusCodeProvider?.notify(statusCode: response.response?.statusCode)
                 switch response.result {
@@ -207,7 +225,7 @@ public class RequestService: RequestServiceProtocol {
         }
     }
     
-    public func makeMultipartDataRequest<Foo>(request: RequestMultipartProtocol,
+    public func makeMultipartDataRequest<Foo, Bar: RequestMultipartProtocol>(request: Bar,
                                               responseType: Foo.Type,
                                               onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
                                               onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
@@ -278,7 +296,7 @@ public class RequestService: RequestServiceProtocol {
             }
     }
     
-    public func makeFileDataRequest<Foo: Decodable>(request: RequestProtocol & BucketProtocol,
+    public func makeFileDataRequest<Foo: Decodable, Bar: RequestProtocol & BucketProtocol>(request: Bar,
                                                     responseType: Foo.Type,
                                                     onComplete: @escaping (_ response: Foo, _ statusCode: Int?) -> Void,
                                                     onError: @escaping (_ error: Error?, _ statusCode: Int?, _ response: Foo?) -> Void,
@@ -290,7 +308,17 @@ public class RequestService: RequestServiceProtocol {
         headers["X-Secret"] = request.getXSecret()
 
         let multipartFormData: (MultipartFormData) -> Void = { (multipartFormData) in
-            let parameters = request.getParams()
+            
+            guard let encodableParameters = request.getParams() else { return }
+            
+            var parameters: Parameters?
+            do {
+                parameters = try encodableParameters.asParameters()
+            } catch let error {
+                // TODO: проверить localizedDescription
+                print(#function, error.localizedDescription)
+            }
+            
             parameters?.forEach({ (key, value) in
                 if let image = value as?  UIImage {
                     if let imageData = image.jpegData(compressionQuality: 0.6) {
@@ -375,7 +403,7 @@ public class RequestService: RequestServiceProtocol {
         })
     }
 
-    private func getRequestUrl(_ request: RequestProtocol) -> String {
+    private func getRequestUrl<Foo: RequestProtocol>(_ request: Foo) -> String {
         if request.isAbsoluteUrl() {
             return request.getUrl()
         } else {
@@ -383,7 +411,7 @@ public class RequestService: RequestServiceProtocol {
         }
     }
     
-    private func getHeadersWithAuthTokenIfNeeded(request: RequestProtocol) -> HTTPHeaders {
+    private func getHeadersWithAuthTokenIfNeeded<Foo: RequestProtocol>(request: Foo) -> HTTPHeaders {
         var headers = self.headersProvider?.getHeaders() ?? HTTPHeaders()
         
         guard request.isAuthorizationRequired() else {

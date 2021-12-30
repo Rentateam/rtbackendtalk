@@ -2,7 +2,7 @@ import Foundation
 import RTBackendTalk
 import Alamofire
 
-class Test2Request: RequestProtocol {
+class Test2Request<T: Encodable>: RequestProtocol {
     
     func getUrl() -> String {
         return "/posts/1234"
@@ -16,7 +16,7 @@ class Test2Request: RequestProtocol {
         return .get
     }
 
-    func getParams() -> Parameters? {
+    func getParams() -> T? {
         return nil
     }
     

@@ -2,8 +2,8 @@ import Foundation
 import RTBackendTalk
 import Alamofire
 
-class TestBucketRequest: RequestProtocol {
-    
+class TestBucketRequest<T: Encodable>: RequestProtocol {
+  
     func getUrl() -> String {
         return "/posts/1234"
     }
@@ -16,7 +16,7 @@ class TestBucketRequest: RequestProtocol {
         return .get
     }
 
-    func getParams() -> Parameters? {
+    func getParams() -> T? {
         return nil
     }
 }
